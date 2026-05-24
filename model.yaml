@@ -112,7 +112,6 @@ components:
         type: usb
     roles:
       rgb:
-        - operator_preview
         - localization
       depth:
         - mapping
