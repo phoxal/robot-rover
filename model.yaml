@@ -113,9 +113,11 @@ components:
     roles:
       rgb:
         - operator_preview
+        - localization
       depth:
         - mapping
         - traversability
+        - localization
 
   front_center_tof:
     component: vl53l1x
