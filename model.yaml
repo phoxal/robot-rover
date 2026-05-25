@@ -102,7 +102,6 @@ components:
     roles:
       imu:
         - odometry
-        - localization
 
   front_camera:
     component: oak_d_lite
@@ -111,6 +110,8 @@ components:
       connection:
         type: usb
     roles:
+      imu:
+        - localization
       rgb:
         - localization
       depth:
