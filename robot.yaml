@@ -1,0 +1,149 @@
+version: v1
+phoxal:
+  cli_min_version: "^0.6"
+identity:
+  id: sandbox-rover
+  namespace: dev
+structure: structure.urdf
+phoxal_runtimes:
+  version: "^0.1"
+sim:
+  world: sim/worlds/default.wbt
+motion:
+  kinematic:
+    kind: differential
+    left_actuators:
+    - front_left_drive.motor
+    - rear_left_drive.motor
+    right_actuators:
+    - front_right_drive.motor
+    - rear_right_drive.motor
+    left_encoders:
+    - front_left_drive.encoder
+    - rear_left_drive.encoder
+    right_encoders:
+    - front_right_drive.encoder
+    - rear_right_drive.encoder
+    wheel_radius_m: 0.1
+    wheel_base_m: 0.52
+components:
+  sources:
+    bno085:
+      path: "../../components/bno085"
+    ddsm115:
+      path: "../../components/ddsm115"
+    oak_d_lite:
+      path: "../../components/oak_d_lite"
+    vl53l1x:
+      path: "../../components/vl53l1x"
+    zed_f9p:
+      path: "../../components/zed_f9p"
+  instances:
+    front_left_drive:
+      component: ddsm115
+      mount_link: front_left_wheel_mount
+      driver:
+        connection:
+          type: can
+          bus: 0
+          node_id: 1
+      parameters:
+        motor:
+          kind: motor
+          direction_sign: 1
+        encoder:
+          kind: encoder
+          direction_sign: 1
+    front_right_drive:
+      component: ddsm115
+      mount_link: front_right_wheel_mount
+      driver:
+        connection:
+          type: can
+          bus: 0
+          node_id: 2
+      parameters:
+        motor:
+          kind: motor
+          direction_sign: -1
+        encoder:
+          kind: encoder
+          direction_sign: -1
+    rear_left_drive:
+      component: ddsm115
+      mount_link: rear_left_wheel_mount
+      driver:
+        connection:
+          type: can
+          bus: 0
+          node_id: 3
+      parameters:
+        motor:
+          kind: motor
+          direction_sign: 1
+        encoder:
+          kind: encoder
+          direction_sign: 1
+    rear_right_drive:
+      component: ddsm115
+      mount_link: rear_right_wheel_mount
+      driver:
+        connection:
+          type: can
+          bus: 0
+          node_id: 4
+      parameters:
+        motor:
+          kind: motor
+          direction_sign: -1
+        encoder:
+          kind: encoder
+          direction_sign: -1
+    imu:
+      component: bno085
+      mount_link: imu_mount
+      driver:
+        connection:
+          type: i2c
+          bus: 1
+          address: 74
+      roles:
+        imu:
+        - odometry
+    front_camera:
+      component: oak_d_lite
+      mount_link: front_camera_mount
+      driver:
+        connection:
+          type: usb
+      roles:
+        imu:
+        - localization
+        rgb:
+        - localization
+        depth:
+        - mapping
+        - traversability
+        - localization
+    front_center_tof:
+      component: vl53l1x
+      mount_link: front_center_tof_mount
+      driver:
+        connection:
+          type: i2c
+          bus: 1
+          address: 41
+      roles:
+        range:
+        - safety
+        - mapping
+        - traversability
+    gnss:
+      component: zed_f9p
+      mount_link: gnss_mount
+      driver:
+        connection:
+          type: usb
+      roles:
+        gnss:
+        - localization
