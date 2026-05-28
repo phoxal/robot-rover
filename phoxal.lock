@@ -1,0 +1,79 @@
+schema_version: 1
+phoxal_runtimes:
+  requested: latest
+  resolved: 0.2.0
+  releases_fetched_at: 2026-05-28T21:45:52Z
+  images:
+    asset: ghcr.io/phoxal/runtime-asset@sha256:def3bb9e9d2a45a8a4ebeb9a9edd8d16181cd81859452e13e0e43ddb26642733
+    drive: ghcr.io/phoxal/runtime-drive@sha256:805e393263479bc2fdab5cae8caf645ae29821ea8c95e451dca376d7c74e1d33
+    explore: ghcr.io/phoxal/runtime-explore@sha256:c842c2c10c87db3fd34aba34f01bdd43f1c3578d0b19eeb4165976d427ec7c2b
+    follow: ghcr.io/phoxal/runtime-follow@sha256:a44913173ebf57285c55d434ecaf058a9dcef7235278196bfaa2e79699ca8d5c
+    frame: ghcr.io/phoxal/runtime-frame@sha256:ad38e3aa3cbbc96e435dd8dc022825dff94bdb2a426dd0f898a8fbdc19997fc0
+    joint: ghcr.io/phoxal/runtime-joint@sha256:4b9ef12df327c6bdb66ff2c077d5a274429316cbe0499af57149b32e3aef89d5
+    localize: ghcr.io/phoxal/runtime-localize@sha256:f6483b40d7439cb5176085403cff5ac8a6fac82045be70ba52f11b5450e9db65
+    map: ghcr.io/phoxal/runtime-map@sha256:a17a0c8c0f1ba00896c3fab1d0b0b44a14a43c086978e436c2dbbb320d0b8807
+    mission: ghcr.io/phoxal/runtime-mission@sha256:ea512848106e24e7ccb7ae71b09d250dbd68fa3935481e74a323a561455f6d97
+    motion: ghcr.io/phoxal/runtime-motion@sha256:e0d805b7f9f72bd1c8f604c2885cf5905b2c12c9cf0ef34fb4174749540d4d23
+    odometry: ghcr.io/phoxal/runtime-odometry@sha256:1b10b0a724b2cbcedde8e2f2d1d68bcd62dfccb7a888bb3e4ee884037126f82c
+    perception: ghcr.io/phoxal/runtime-perception@sha256:96d7f07acffdce9988ec0656e06142e5f2840fb834870a80e858b7e7e62e7b53
+    plan: ghcr.io/phoxal/runtime-plan@sha256:6e1228b186f86b7467d58be015ba60ddc1a4c92ecf3c0a3024ade680601e4777
+    power: ghcr.io/phoxal/runtime-power@sha256:d00b4fe0baa70a6543dc5fd01187161356ff171039e84b0da2f00779d51caa72
+    presence: ghcr.io/phoxal/runtime-presence@sha256:aa30598665ead8f36a9a45b7e98d2e680ae2cc8430f315808db068e378545380
+    router: ghcr.io/phoxal/runtime-router@sha256:28214e107217f9d78581f6c576a21c3df9227d653e5a64db9f1da2fe2e06fea8
+    safety: ghcr.io/phoxal/runtime-safety@sha256:f852c0e57be95c866f5f66c8568ee87d1796eb7474505008ba5167a8b63d53c7
+    video: ghcr.io/phoxal/runtime-video@sha256:4e470483ce4a551d0f780504e1823a83e4b5e3d133081c93cfa4bf883f768cda
+components:
+  bno085:
+    source:
+      git: https://github.com/phoxal/component-bno085
+      tag: main
+    commit: 0801653ac1f4b2fb4c4ad48a446c4e8be61abdc2
+  ddsm115:
+    source:
+      git: https://github.com/phoxal/component-ddsm115
+      tag: main
+    commit: 0a93b3a309bf547cf867ff8db65c456dd99d62d9
+  oak_d_lite:
+    source:
+      git: https://github.com/phoxal/component-oak_d_lite
+      tag: main
+    commit: 77cb4a9613073fd705b82a4d1b7722c90cf2ba33
+  vl53l1x:
+    source:
+      git: https://github.com/phoxal/component-vl53l1x
+      tag: main
+    commit: 997ad0516be45460d2ed63b35d01cc06de2fb055
+  zed_f9p:
+    source:
+      git: https://github.com/phoxal/component-zed_f9p
+      tag: main
+    commit: 487503e47d1d2e6b042c2cf1afd41051f2a8646b
+tools:
+  joypad:
+    requested: 0.1.0
+    resolved: 0.1.0
+    repo: phoxal/joypad
+    asset: phoxal-joypad-0.1.0-aarch64-apple-darwin.tar.gz
+    binary_name: phoxal-joypad-aarch64-apple-darwin
+    sha256: 8d55b3d18ca7fb43ff2cb14603b32db2ccccc8fde06682bd256e0ae58d7e3c47
+  rerun_proxy:
+    requested: 0.1.0
+    resolved: 0.1.0
+    repo: phoxal/operator
+    asset: phoxal-rerun-proxy-0.1.0-aarch64-apple-darwin.tar.gz
+    binary_name: phoxal-rerun-proxy-aarch64-apple-darwin
+    sha256: 2a8a261fb4de04a132a0fa56a336f1be195c280c1d6e1ba23cc62284fa61e984
+  simulator_webots_controller:
+    requested: 0.2.0
+    resolved: 0.2.0
+    repo: phoxal/simulator
+    asset: phoxal-simulator-0.2.0-aarch64-apple-darwin.tar.gz
+    binary_name: phoxal-simulator-webots-controller-aarch64-apple-darwin
+    sha256: c7b433b428212c2ddb2ea08ca9bf7eda3585835076966fd0701fb3d1b3111925
+  simulator_webots_supervisor:
+    requested: 0.2.0
+    resolved: 0.2.0
+    repo: phoxal/simulator
+    asset: phoxal-simulator-0.2.0-aarch64-apple-darwin.tar.gz
+    binary_name: phoxal-simulator-webots-supervisor-aarch64-apple-darwin
+    sha256: c7b433b428212c2ddb2ea08ca9bf7eda3585835076966fd0701fb3d1b3111925

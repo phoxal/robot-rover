@@ -63,6 +63,121 @@
     <origin xyz="-0.18 -0.26 -0.10" rpy="1.5708 0 0" />
   </joint>
 
+  <!-- Front Left Wheel -->
+  <!-- Spins around the mount frame's z-axis. Cylinder inertia for m=0.5 kg, r=0.1 m, h=0.05 m:
+       Ixx = Iyy = (1/12)*m*(3r^2 + h^2) = 0.0013541667
+       Izz = (1/2)*m*r^2 = 0.0025 -->
+  <link name="front_left_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.1" length="0.05" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.1" length="0.05" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.5" />
+      <inertia ixx="0.0013541667" ixy="0.0" ixz="0.0" iyy="0.0013541667" iyz="0.0" izz="0.0025" />
+    </inertial>
+  </link>
+
+  <joint name="front_left_drive__motor_joint" type="continuous">
+    <parent link="front_left_wheel_mount" />
+    <child link="front_left_wheel" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <!-- Front Right Wheel -->
+  <link name="front_right_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.1" length="0.05" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.1" length="0.05" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.5" />
+      <inertia ixx="0.0013541667" ixy="0.0" ixz="0.0" iyy="0.0013541667" iyz="0.0" izz="0.0025" />
+    </inertial>
+  </link>
+
+  <joint name="front_right_drive__motor_joint" type="continuous">
+    <parent link="front_right_wheel_mount" />
+    <child link="front_right_wheel" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <!-- Rear Left Wheel -->
+  <link name="rear_left_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.1" length="0.05" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.1" length="0.05" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.5" />
+      <inertia ixx="0.0013541667" ixy="0.0" ixz="0.0" iyy="0.0013541667" iyz="0.0" izz="0.0025" />
+    </inertial>
+  </link>
+
+  <joint name="rear_left_drive__motor_joint" type="continuous">
+    <parent link="rear_left_wheel_mount" />
+    <child link="rear_left_wheel" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <!-- Rear Right Wheel -->
+  <link name="rear_right_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.1" length="0.05" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.1" length="0.05" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.5" />
+      <inertia ixx="0.0013541667" ixy="0.0" ixz="0.0" iyy="0.0013541667" iyz="0.0" izz="0.0025" />
+    </inertial>
+  </link>
+
+  <joint name="rear_right_drive__motor_joint" type="continuous">
+    <parent link="rear_right_wheel_mount" />
+    <child link="rear_right_wheel" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
   <link name="imu_mount" />
 
   <joint name="imu_mount_joint" type="fixed">

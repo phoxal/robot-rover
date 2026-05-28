@@ -1,12 +1,12 @@
 version: v1
 phoxal:
-  cli_min_version: "^0.6"
+  cli_min_version: ">=0.0.0-0"
 identity:
-  id: sandbox-rover
+  id: robot-rover
   namespace: dev
 structure: structure.urdf
 phoxal_runtimes:
-  version: "^0.1"
+  version: "latest"
 sim:
   world: sim/worlds/default.wbt
 motion:
