@@ -1,8 +1,8 @@
-schema_version: 1
+schema_version: 2
 phoxal_runtimes:
   requested: latest
   resolved: 0.2.0
-  releases_fetched_at: 2026-05-28T21:45:52Z
+  releases_fetched_at: 2026-05-29T15:38:06.702240Z
   images:
     asset: ghcr.io/phoxal/runtime-asset@sha256:def3bb9e9d2a45a8a4ebeb9a9edd8d16181cd81859452e13e0e43ddb26642733
     drive: ghcr.io/phoxal/runtime-drive@sha256:805e393263479bc2fdab5cae8caf645ae29821ea8c95e451dca376d7c74e1d33
@@ -19,7 +19,6 @@ phoxal_runtimes:
     plan: ghcr.io/phoxal/runtime-plan@sha256:6e1228b186f86b7467d58be015ba60ddc1a4c92ecf3c0a3024ade680601e4777
     power: ghcr.io/phoxal/runtime-power@sha256:d00b4fe0baa70a6543dc5fd01187161356ff171039e84b0da2f00779d51caa72
     presence: ghcr.io/phoxal/runtime-presence@sha256:aa30598665ead8f36a9a45b7e98d2e680ae2cc8430f315808db068e378545380
-    router: ghcr.io/phoxal/runtime-router@sha256:28214e107217f9d78581f6c576a21c3df9227d653e5a64db9f1da2fe2e06fea8
     safety: ghcr.io/phoxal/runtime-safety@sha256:f852c0e57be95c866f5f66c8568ee87d1796eb7474505008ba5167a8b63d53c7
     video: ghcr.io/phoxal/runtime-video@sha256:4e470483ce4a551d0f780504e1823a83e4b5e3d133081c93cfa4bf883f768cda
 components:
