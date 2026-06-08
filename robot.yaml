@@ -28,23 +28,23 @@ components:
   sources:
     bno085:
       git: "https://github.com/phoxal/components"
-      tag: "v0.3.0"
+      tag: "main"
       directory: "bno085"
     ddsm115:
       git: "https://github.com/phoxal/components"
-      tag: "v0.3.0"
+      tag: "main"
       directory: "ddsm115"
     oak_d_lite:
       git: "https://github.com/phoxal/components"
-      tag: "v0.3.0"
+      tag: "main"
       directory: "oak_d_lite"
     vl53l1x:
       git: "https://github.com/phoxal/components"
-      tag: "v0.3.0"
+      tag: "main"
       directory: "vl53l1x"
     zed_f9p:
       git: "https://github.com/phoxal/components"
-      tag: "v0.3.0"
+      tag: "main"
       directory: "zed_f9p"
   instances:
     front_left_drive:
