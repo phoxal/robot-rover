@@ -27,20 +27,25 @@ motion:
 components:
   sources:
     bno085:
-      git: "https://github.com/phoxal/component-bno085"
-      tag: "main"
+      git: "https://github.com/phoxal/components"
+      tag: "v0.3.0"
+      directory: "bno085"
     ddsm115:
-      git: "https://github.com/phoxal/component-ddsm115"
-      tag: "main"
+      git: "https://github.com/phoxal/components"
+      tag: "v0.3.0"
+      directory: "ddsm115"
     oak_d_lite:
-      git: "https://github.com/phoxal/component-oak_d_lite"
-      tag: "main"
+      git: "https://github.com/phoxal/components"
+      tag: "v0.3.0"
+      directory: "oak_d_lite"
     vl53l1x:
-      git: "https://github.com/phoxal/component-vl53l1x"
-      tag: "main"
+      git: "https://github.com/phoxal/components"
+      tag: "v0.3.0"
+      directory: "vl53l1x"
     zed_f9p:
-      git: "https://github.com/phoxal/component-zed_f9p"
-      tag: "main"
+      git: "https://github.com/phoxal/components"
+      tag: "v0.3.0"
+      directory: "zed_f9p"
   instances:
     front_left_drive:
       component: ddsm115
