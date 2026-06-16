@@ -1,57 +1,57 @@
-schema_version: 2
+schema_version: 3
 phoxal_runtimes:
   requested: latest
-  resolved: 0.3.0
-  releases_fetched_at: 2026-06-08T10:52:30Z
+  resolved: 0.10.0
+  releases_fetched_at: 2026-06-16T13:21:21.111359Z
   images:
-    asset: ghcr.io/phoxal/runtime-asset@sha256:e984f7fef406506bc6669035aa2840bfe7d348630ff083ca8e53817d1d8fef16
-    drive: ghcr.io/phoxal/runtime-drive@sha256:f1aeaa4532a1883065bc67748312a220a20346d2f6243e3b63838a5549420901
-    explore: ghcr.io/phoxal/runtime-explore@sha256:a9aab0dbc4767eb7dd49482442c8b1369c9c45e3e9ebeed83174c22f936da5f2
-    follow: ghcr.io/phoxal/runtime-follow@sha256:1c6caca6e669b6138dbef30566e03b41d281c0e6da4be428b01a817daa268805
-    frame: ghcr.io/phoxal/runtime-frame@sha256:a5d153f8015e3b76744d3e9497ffc78e4e4c3485263c269281b751078dfb4b9e
-    joint: ghcr.io/phoxal/runtime-joint@sha256:a70e849e48a3e27337c006573c67ebb2d905f5e1d971af3f051e1c77232d67cd
-    localize: ghcr.io/phoxal/runtime-localize@sha256:c9718030afe1e759a95020ff6cfea5889adb54718f031f7a3c27c050db55bc3c
-    map: ghcr.io/phoxal/runtime-map@sha256:73be1632d9805f7b7fde0a6f36b8e1b21da713e0f3dc2ac92ddf80ddba897402
-    mission: ghcr.io/phoxal/runtime-mission@sha256:c40b89ebc7ac4aa597859c4166ce9e9726f9fc2c440fdaa0c969e68a9a7f646e
-    motion: ghcr.io/phoxal/runtime-motion@sha256:65827aafb755a2e4c910ac26a7e3b551f39d4f9c012ce9a5dff0f0e2585e7b70
-    odometry: ghcr.io/phoxal/runtime-odometry@sha256:6a77f087add1c442287837329411b4722e71a8918b145db8b2041513bffddaec
-    perception: ghcr.io/phoxal/runtime-perception@sha256:2c84d33fb0ea887bb6b8fcadd1090f6fd209fe7fa74215a89c461ed6e492a2bb
-    plan: ghcr.io/phoxal/runtime-plan@sha256:d7025b5d799686b8f2e72201ad978b625f3f80690bbc1228e021c64d28dd0ac6
-    power: ghcr.io/phoxal/runtime-power@sha256:e604cc4d060191491b1e3c76344b83410c7bee319c9a12d5f4474da8ed0550a7
-    presence: ghcr.io/phoxal/runtime-presence@sha256:ed4c037f23b0103cae663833862f5c6e7e22ad356e523c830203ba2adbcf8626
-    safety: ghcr.io/phoxal/runtime-safety@sha256:97fe91955980e2938d2aa56a7d63513233354463d69d331d841659ad3ad6edc9
-    video: ghcr.io/phoxal/runtime-video@sha256:dd1bda3ff0b109f487d9e494cce8bca560b51511d5074a3aa22df581361864a8
+    asset: ghcr.io/phoxal/runtime-asset:0.10.0
+    drive: ghcr.io/phoxal/runtime-drive:0.10.0
+    explore: ghcr.io/phoxal/runtime-explore:0.10.0
+    follow: ghcr.io/phoxal/runtime-follow:0.10.0
+    frame: ghcr.io/phoxal/runtime-frame:0.10.0
+    joint: ghcr.io/phoxal/runtime-joint:0.10.0
+    localize: ghcr.io/phoxal/runtime-localize:0.10.0
+    map: ghcr.io/phoxal/runtime-map:0.10.0
+    mission: ghcr.io/phoxal/runtime-mission:0.10.0
+    motion: ghcr.io/phoxal/runtime-motion:0.10.0
+    odometry: ghcr.io/phoxal/runtime-odometry:0.10.0
+    perception: ghcr.io/phoxal/runtime-perception:0.10.0
+    plan: ghcr.io/phoxal/runtime-plan:0.10.0
+    power: ghcr.io/phoxal/runtime-power:0.10.0
+    presence: ghcr.io/phoxal/runtime-presence:0.10.0
+    safety: ghcr.io/phoxal/runtime-safety:0.10.0
+    video: ghcr.io/phoxal/runtime-video:0.10.0
 components:
   bno085:
     source:
       git: https://github.com/phoxal/components
       tag: main
       directory: bno085
-    commit: d8b5d458a3afbb97e6ebfd56dd83318f51702e7b
+    commit: a6fa0d64b1f4e69b3b9f62e5add984f9a9af95dd
   ddsm115:
     source:
       git: https://github.com/phoxal/components
       tag: main
       directory: ddsm115
-    commit: d8b5d458a3afbb97e6ebfd56dd83318f51702e7b
+    commit: a6fa0d64b1f4e69b3b9f62e5add984f9a9af95dd
   oak_d_lite:
     source:
       git: https://github.com/phoxal/components
       tag: main
       directory: oak_d_lite
-    commit: d8b5d458a3afbb97e6ebfd56dd83318f51702e7b
+    commit: a6fa0d64b1f4e69b3b9f62e5add984f9a9af95dd
   vl53l1x:
     source:
       git: https://github.com/phoxal/components
       tag: main
       directory: vl53l1x
-    commit: d8b5d458a3afbb97e6ebfd56dd83318f51702e7b
+    commit: a6fa0d64b1f4e69b3b9f62e5add984f9a9af95dd
   zed_f9p:
     source:
       git: https://github.com/phoxal/components
       tag: main
       directory: zed_f9p
-    commit: d8b5d458a3afbb97e6ebfd56dd83318f51702e7b
+    commit: a6fa0d64b1f4e69b3b9f62e5add984f9a9af95dd
 tools:
   joypad:
     requested: 0.1.0
@@ -68,16 +68,16 @@ tools:
     binary_name: phoxal-rerun-proxy-aarch64-apple-darwin
     sha256: 925a5d155372b3915dc1c616f6ff200692f4335d132f9e795d3a5e6dda55015d
   simulator_webots_controller:
-    requested: 0.2.0
-    resolved: 0.2.0
-    repo: phoxal/simulator
-    asset: phoxal-simulator-0.2.0-aarch64-apple-darwin.tar.gz
+    requested: 0.10.0
+    resolved: 0.10.0
+    repo: phoxal/framework
+    asset: phoxal-simulator-0.10.0-aarch64-apple-darwin.tar.gz
     binary_name: phoxal-simulator-webots-controller-aarch64-apple-darwin
-    sha256: 59578b0add78662c001ea96e16a63f5c8ee6c02102aea0d21809d8df2a71e920
+    sha256: 70d411d399bef4b1c6ac2452a5e22ad342cd59889b557c59da6d9f5d111f5a4b
   simulator_webots_supervisor:
-    requested: 0.2.0
-    resolved: 0.2.0
-    repo: phoxal/simulator
-    asset: phoxal-simulator-0.2.0-aarch64-apple-darwin.tar.gz
+    requested: 0.10.0
+    resolved: 0.10.0
+    repo: phoxal/framework
+    asset: phoxal-simulator-0.10.0-aarch64-apple-darwin.tar.gz
     binary_name: phoxal-simulator-webots-supervisor-aarch64-apple-darwin
-    sha256: 8a21cca19628b8d5f150e97a07356b15d383a1b09e9710a6db76a813143a2811
+    sha256: dd6f1cf04a21dc2a819ef50a17459fb7d76ba26b0d8e9f5ab1bfac27307c3b73
