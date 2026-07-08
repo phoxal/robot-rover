@@ -1,4 +1,4 @@
-version: v1
+schema: robot/v0
 identity:
   id: robot-rover
   namespace: dev
