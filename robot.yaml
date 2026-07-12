@@ -1,50 +1,25 @@
 schema: robot/v0
-identity:
+robot:
   id: robot-rover
   namespace: dev
-structure: structure.urdf
-phoxal_runtimes:
-  version: "latest"
-motion:
+  structure: structure.urdf
   kinematic:
     kind: differential
     left_actuators:
-    - front_left_drive.motor
-    - rear_left_drive.motor
+      - front_left_drive.motor
+      - rear_left_drive.motor
     right_actuators:
-    - front_right_drive.motor
-    - rear_right_drive.motor
+      - front_right_drive.motor
+      - rear_right_drive.motor
     left_encoders:
-    - front_left_drive.encoder
-    - rear_left_drive.encoder
+      - front_left_drive.encoder
+      - rear_left_drive.encoder
     right_encoders:
-    - front_right_drive.encoder
-    - rear_right_drive.encoder
+      - front_right_drive.encoder
+      - rear_right_drive.encoder
     wheel_radius_m: 0.1
     wheel_base_m: 0.52
-components:
-  sources:
-    bno085:
-      git: "https://github.com/phoxal/framework"
-      tag: "main"
-      directory: "component/bno085"
-    ddsm115:
-      git: "https://github.com/phoxal/framework"
-      tag: "main"
-      directory: "component/ddsm115"
-    oak_d_lite:
-      git: "https://github.com/phoxal/framework"
-      tag: "main"
-      directory: "component/oak_d_lite"
-    vl53l1x:
-      git: "https://github.com/phoxal/framework"
-      tag: "main"
-      directory: "component/vl53l1x"
-    zed_f9p:
-      git: "https://github.com/phoxal/framework"
-      tag: "main"
-      directory: "component/zed_f9p"
-  instances:
+  components:
     front_left_drive:
       component: ddsm115
       mount_link: front_left_wheel_mount
@@ -115,7 +90,7 @@ components:
           address: 74
       roles:
         imu:
-        - odometry
+          - odometry
     front_camera:
       component: oak_d_lite
       mount_link: front_camera_mount
@@ -124,13 +99,13 @@ components:
           type: usb
       roles:
         imu:
-        - localization
+          - localization
         rgb:
-        - localization
+          - localization
         depth:
-        - mapping
-        - traversability
-        - localization
+          - mapping
+          - traversability
+          - localization
     front_center_tof:
       component: vl53l1x
       mount_link: front_center_tof_mount
@@ -141,9 +116,9 @@ components:
           address: 41
       roles:
         range:
-        - safety
-        - mapping
-        - traversability
+          - safety
+          - mapping
+          - traversability
     gnss:
       component: zed_f9p
       mount_link: gnss_mount
@@ -152,4 +127,4 @@ components:
           type: usb
       roles:
         gnss:
-        - localization
+          - localization
