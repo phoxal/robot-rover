@@ -1,10 +1,10 @@
 # Phoxal robot-rover
 
-Open exploratory sandbox rover. Pure manifest — `robot.yaml` + URDF — consumed by `phoxal-cli` to assemble a runnable robot from catalog components.
+Open exploratory sandbox rover. Example of simple rover using phoxal framework.
 
 ## License
 
-AGPL-3.0-only — see [LICENSE](LICENSE) for the full license text.
+MIT
 
 ## Phoxal
 
