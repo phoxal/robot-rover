@@ -3,6 +3,7 @@ name = "phoxal-robot-project"
 version = "0.0.0"
 edition = "2024"
 publish = false
+license = "MIT"
 
 [workspace]
 resolver = "3"
