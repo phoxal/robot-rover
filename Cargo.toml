@@ -3,13 +3,14 @@ name = "phoxal-robot-project"
 version = "0.0.0"
 edition = "2024"
 publish = false
+license = "MIT"
 
 [workspace]
 resolver = "3"
 members = []
 
 [workspace.dependencies]
-phoxal = "=0.36.0"
+phoxal = "=0.38.1"
 
 [dependencies]
 phoxal.workspace = true
