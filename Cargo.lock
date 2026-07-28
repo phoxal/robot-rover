@@ -656,12 +656,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "dotenvy"
-version = "0.15.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1aaf95b3e5c8f23aa320147307562d361db0ae0d51242340f558153b4eb2439b"
-
-[[package]]
 name = "dyn-clone"
 version = "1.0.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1927,24 +1921,21 @@ dependencies = [
 
 [[package]]
 name = "phoxal"
-version = "0.42.0"
+version = "0.42.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3dd61547c514b12695f25afec76612a3d92f033b7eab40e758c8a91b00e131b6"
+checksum = "5e9a30b9e0d25b0ae51dec6575d08fa877772e3178d15d70d6bcf62915fdf843"
 dependencies = [
  "anyhow",
  "arc-swap",
  "clap",
  "const_format",
  "derive-new",
- "dotenvy",
  "libc",
  "nalgebra",
  "phoxal-api",
  "phoxal-bus",
  "phoxal-macros",
- "rmp-serde",
  "serde",
- "serde_bytes",
  "serde_json",
  "serde_yaml",
  "sha2",
@@ -1953,14 +1944,13 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "urdf-rs",
- "zenoh",
 ]
 
 [[package]]
 name = "phoxal-api"
-version = "0.42.0"
+version = "0.42.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf519d0a50e08f555111c188a1733220b0b78951aa74da342f8c94508f56c06b"
+checksum = "2c6cb6aa24f54684ea01ee97591bc61a0a6332e8045a9e482f7a49ebaa04ef1b"
 dependencies = [
  "phoxal-bus",
  "phoxal-macros",
@@ -1970,9 +1960,9 @@ dependencies = [
 
 [[package]]
 name = "phoxal-bus"
-version = "0.42.0"
+version = "0.42.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fb969613541d5a0f0cd088f6cf962e2ead1da43f625dbae61215b831a21354f1"
+checksum = "14140304f3bfbc11df6628cd09ac113834b00d1c2098efb5ab30afb66c49addc"
 dependencies = [
  "getrandom 0.3.4",
  "libc",
@@ -1988,9 +1978,9 @@ dependencies = [
 
 [[package]]
 name = "phoxal-macros"
-version = "0.42.0"
+version = "0.42.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2e89b55cd593ffdc008626a763fc677e888a40d2f0eb9126d15db756f0b10744"
+checksum = "7bf4674674f50639a32256f9c150baaf9ffef30aae7741fbab222a80d51cedbd"
 dependencies = [
  "heck",
  "proc-macro2",
