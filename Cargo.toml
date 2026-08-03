@@ -10,7 +10,7 @@ resolver = "3"
 members = []
 
 [workspace.dependencies]
-phoxal = "0.49.0"
+phoxal = "0.51.0"
 
 [dependencies]
 phoxal.workspace = true
