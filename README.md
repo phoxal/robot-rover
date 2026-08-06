@@ -3,8 +3,11 @@
 Open exploratory sandbox rover. Example of simple rover using phoxal framework.
 
 The committed root `Cargo.lock` selects the exact framework train. The root
-package is intentionally empty: it keeps the `phoxal` dependency in the real
-Cargo graph even while this project has no user-authored Rust services.
+package is this robot's brain: `src/main.rs` declares the one mandatory
+composition root with `#[phoxal::brain]`, and the CLI always builds, validates,
+and stages it as `bin/brain`. The rover has no mission policy yet, so the brain
+is a no-op; robot-specific mission policy, intent selection, and recovery become
+ordinary Rust code compiled into that binary.
 
 ## Editor schemas
 
