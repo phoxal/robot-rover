@@ -28,9 +28,11 @@ robot:
       mount_link: front_left_wheel_mount
       driver:
         connection:
-          type: can
-          bus: 0
-          node_id: 1
+          type: serial
+          port: /dev/ttyUSB0
+          baud: 115200
+        config:
+          id: 1
       parameters:
         motor:
           kind: motor
@@ -43,9 +45,11 @@ robot:
       mount_link: front_right_wheel_mount
       driver:
         connection:
-          type: can
-          bus: 0
-          node_id: 2
+          type: serial
+          port: /dev/ttyUSB0
+          baud: 115200
+        config:
+          id: 2
       parameters:
         motor:
           kind: motor
@@ -58,9 +62,11 @@ robot:
       mount_link: rear_left_wheel_mount
       driver:
         connection:
-          type: can
-          bus: 0
-          node_id: 3
+          type: serial
+          port: /dev/ttyUSB0
+          baud: 115200
+        config:
+          id: 3
       parameters:
         motor:
           kind: motor
@@ -73,9 +79,11 @@ robot:
       mount_link: rear_right_wheel_mount
       driver:
         connection:
-          type: can
-          bus: 0
-          node_id: 4
+          type: serial
+          port: /dev/ttyUSB0
+          baud: 115200
+        config:
+          id: 4
       parameters:
         motor:
           kind: motor
