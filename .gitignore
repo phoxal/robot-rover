@@ -1,6 +1,5 @@
 .idea
 .env
 .phoxal/
-.claude/
 .aider*
 /target/
