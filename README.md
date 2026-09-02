@@ -6,7 +6,8 @@ provides a non-application-specific check for framework changes.
 The project follows the authored robot project layout and tracks the evolving
 pre-1.0 framework.
 
-See <https://phoxal.com> for public Phoxal documentation.
+This repository is the authoritative source for the current public rover example.
+See <https://phoxal.com> for the project vision and public introduction.
 
 ## License
 
