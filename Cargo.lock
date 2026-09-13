@@ -229,6 +229,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "block2"
+version = "0.6.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cdeb9d870516001442e364c5220d3574d2da8dc765554b4a617230d33fa58ef5"
+dependencies = [
+ "objc2",
+]
+
+[[package]]
 name = "bs58"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -503,6 +512,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "ctrlc"
+version = "3.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e0b1fab2ae45819af2d0731d60f2afe17227ebb1a1538a236da84c93e9a60162"
+dependencies = [
+ "dispatch2",
+ "nix 0.31.3",
+ "windows-sys 0.61.2",
+]
+
+[[package]]
 name = "darling"
 version = "0.23.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -638,6 +658,18 @@ dependencies = [
  "option-ext",
  "redox_users",
  "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "dispatch2"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1e0e367e4e7da84520dedcac1901e4da967309406d1e51017ae1abfb97adbd38"
+dependencies = [
+ "bitflags 2.13.1",
+ "block2",
+ "libc",
+ "objc2",
 ]
 
 [[package]]
@@ -1413,6 +1445,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "linux-raw-sys"
+version = "0.12.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "32a66949e030da00e8c7d4434b251670a91556f4144941d37452769c25d58a53"
+
+[[package]]
 name = "litemap"
 version = "0.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1491,6 +1529,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "multimap"
+version = "0.10.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1d87ecb2933e8aeadb3e3a02b828fed80a7528047e68b4f424523a0981a3a084"
+
+[[package]]
 name = "nanorand"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1504,6 +1548,18 @@ name = "nix"
 version = "0.29.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "71e2746dc3a24dd78b3cfcb7be93368c6de9963d30f43a6a73998a9cf4b17b46"
+dependencies = [
+ "bitflags 2.13.1",
+ "cfg-if",
+ "cfg_aliases",
+ "libc",
+]
+
+[[package]]
+name = "nix"
+version = "0.31.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf20d2fde8ff38632c426f1165ed7436270b44f199fc55284c38276f9db47c3d"
 dependencies = [
  "bitflags 2.13.1",
  "cfg-if",
@@ -1617,6 +1673,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "objc2"
+version = "0.6.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3a12a8ed07aefc768292f076dc3ac8c48f3781c8f2d5851dd3d98950e8c5a89f"
+dependencies = [
+ "objc2-encode",
+]
+
+[[package]]
+name = "objc2-encode"
+version = "4.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ef25abbcd74fb2609453eb695bd2f860d389e457f67dc17cafc8b8cbc89d0c33"
+
+[[package]]
 name = "oid-registry"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1654,6 +1725,29 @@ name = "parking"
 version = "2.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f38d5652c16fde515bb1ecef450ab0f6a219d619a7274976324d5e377f7dceba"
+
+[[package]]
+name = "parking_lot"
+version = "0.12.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "93857453250e3077bd71ff98b6a65ea6621a19bb0f559a85248955ac12c45a1a"
+dependencies = [
+ "lock_api",
+ "parking_lot_core",
+]
+
+[[package]]
+name = "parking_lot_core"
+version = "0.9.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2621685985a2ebf1c516881c026032ac7deafcda1a2c9b7850dc81e3dfcb64c1"
+dependencies = [
+ "cfg-if",
+ "libc",
+ "redox_syscall",
+ "smallvec",
+ "windows-link",
+]
 
 [[package]]
 name = "paste"
@@ -1785,33 +1879,125 @@ dependencies = [
 
 [[package]]
 name = "phoxal"
-version = "0.67.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b3e00cb5b870c5bec82dc5a850c5ab38c49461e36d3d856453aba78706dce9ba"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
 dependencies = [
  "anyhow",
  "clap",
- "const_format",
  "getrandom 0.3.4",
- "libc",
+ "phoxal-build",
  "phoxal-macros",
- "rmp-serde",
- "schemars 1.2.2",
+ "phoxal-port",
+ "prost",
  "serde",
  "serde_bytes",
  "serde_json",
+ "sha2",
  "thiserror 2.0.20",
  "tokio",
+ "tokio-util",
  "tracing",
- "tracing-subscriber",
  "zenoh",
 ]
 
 [[package]]
+name = "phoxal-build"
+version = "0.1.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "heck",
+ "prost",
+ "prost-build",
+ "prost-reflect",
+ "prost-types",
+ "protoc-bin-vendored",
+ "thiserror 2.0.20",
+]
+
+[[package]]
+name = "phoxal-component-bno085"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "anyhow",
+ "phoxal",
+ "phoxal-build",
+ "phoxal-port",
+ "prost",
+ "serde",
+]
+
+[[package]]
+name = "phoxal-component-ddsm115"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "anyhow",
+ "phoxal",
+ "phoxal-build",
+ "phoxal-motion",
+ "phoxal-port",
+ "phoxal-robotics",
+ "prost",
+ "serde",
+]
+
+[[package]]
+name = "phoxal-component-oak_d_lite"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "anyhow",
+ "phoxal",
+ "phoxal-build",
+ "phoxal-port",
+ "prost",
+ "serde",
+]
+
+[[package]]
+name = "phoxal-component-vl53l1x"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "anyhow",
+ "phoxal",
+ "phoxal-build",
+ "phoxal-port",
+ "phoxal-robotics",
+ "prost",
+ "serde",
+]
+
+[[package]]
+name = "phoxal-component-zed_f9p"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "anyhow",
+ "phoxal",
+ "phoxal-build",
+ "phoxal-port",
+ "prost",
+ "serde",
+]
+
+[[package]]
+name = "phoxal-kinematics"
+version = "0.1.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "phoxal-build",
+ "phoxal-port",
+ "phoxal-robotics",
+ "prost",
+ "thiserror 2.0.20",
+]
+
+[[package]]
 name = "phoxal-macros"
-version = "0.67.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b2346891c2157e270c60257914e304f7cc04160c204ab2b91165c10234424c76"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -1821,10 +2007,171 @@ dependencies = [
 ]
 
 [[package]]
+name = "phoxal-motion"
+version = "0.1.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "phoxal-build",
+ "phoxal-port",
+ "prost",
+ "thiserror 2.0.20",
+]
+
+[[package]]
+name = "phoxal-navigation"
+version = "0.1.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "phoxal-build",
+ "phoxal-port",
+ "prost",
+ "thiserror 2.0.20",
+]
+
+[[package]]
+name = "phoxal-port"
+version = "0.1.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+
+[[package]]
 name = "phoxal-robot-project"
 version = "0.0.0"
 dependencies = [
+ "anyhow",
  "phoxal",
+ "phoxal-component-bno085",
+ "phoxal-component-ddsm115",
+ "phoxal-component-oak_d_lite",
+ "phoxal-component-vl53l1x",
+ "phoxal-component-zed_f9p",
+ "phoxal-service-kinematics",
+ "phoxal-service-motion",
+ "phoxal-service-navigation",
+ "phoxal-service-safety",
+ "phoxal-service-world",
+ "phoxal-supervisor",
+]
+
+[[package]]
+name = "phoxal-robotics"
+version = "0.1.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "phoxal-build",
+ "prost",
+ "thiserror 2.0.20",
+]
+
+[[package]]
+name = "phoxal-safety"
+version = "0.1.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "phoxal-build",
+ "phoxal-motion",
+ "phoxal-port",
+ "phoxal-robotics",
+ "phoxal-world",
+ "prost",
+ "thiserror 2.0.20",
+]
+
+[[package]]
+name = "phoxal-service-kinematics"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "anyhow",
+ "phoxal",
+ "phoxal-kinematics",
+ "phoxal-robotics",
+ "serde",
+]
+
+[[package]]
+name = "phoxal-service-motion"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "anyhow",
+ "phoxal",
+ "phoxal-kinematics",
+ "phoxal-motion",
+ "phoxal-safety",
+ "serde",
+]
+
+[[package]]
+name = "phoxal-service-navigation"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "anyhow",
+ "phoxal",
+ "phoxal-kinematics",
+ "phoxal-navigation",
+ "phoxal-world",
+ "serde",
+]
+
+[[package]]
+name = "phoxal-service-safety"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "anyhow",
+ "phoxal",
+ "phoxal-motion",
+ "phoxal-safety",
+ "phoxal-world",
+ "serde",
+]
+
+[[package]]
+name = "phoxal-service-world"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "anyhow",
+ "phoxal",
+ "phoxal-kinematics",
+ "phoxal-world",
+ "serde",
+]
+
+[[package]]
+name = "phoxal-supervisor"
+version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "anyhow",
+ "clap",
+ "ctrlc",
+ "libc",
+ "phoxal",
+ "prost",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "thiserror 2.0.20",
+ "tokio",
+ "tokio-util",
+ "tracing",
+ "tracing-subscriber",
+ "zenoh",
+]
+
+[[package]]
+name = "phoxal-world"
+version = "0.1.0"
+source = "git+https://github.com/phoxal/framework.git?rev=ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5#ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5"
+dependencies = [
+ "phoxal-build",
+ "phoxal-kinematics",
+ "phoxal-port",
+ "prost",
+ "thiserror 2.0.20",
 ]
 
 [[package]]
@@ -1926,6 +2273,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "prettyplease"
+version = "0.2.37"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "479ca8adacdd7ce8f1fb39ce9ecccbfe93a3f1344b3d0d97f20bc0196208f62b"
+dependencies = [
+ "proc-macro2",
+ "syn 2.0.119",
+]
+
+[[package]]
 name = "proc-macro-crate"
 version = "3.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1942,6 +2299,131 @@ checksum = "985e7ec9bb745e6ce6535b544d84d6cd6f7ad8bd711c398938ae983b91a766d9"
 dependencies = [
  "unicode-ident",
 ]
+
+[[package]]
+name = "prost"
+version = "0.14.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "528ac67416ff8646872a3c02cad9cc4ee5dc9f9540c9b10771855c95cb2e5ae1"
+dependencies = [
+ "bytes",
+ "prost-derive",
+]
+
+[[package]]
+name = "prost-build"
+version = "0.14.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "03da047801ff44bb6a4d407d4860c05fd70bb81714e6b2f3812603d5b145b042"
+dependencies = [
+ "heck",
+ "itertools",
+ "log",
+ "multimap",
+ "petgraph",
+ "prettyplease",
+ "prost",
+ "prost-types",
+ "regex",
+ "syn 2.0.119",
+ "tempfile",
+]
+
+[[package]]
+name = "prost-derive"
+version = "0.14.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b570b25f7617e43d59005d0990ccb79e950a423952cea19671b7a876da390adf"
+dependencies = [
+ "anyhow",
+ "itertools",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.119",
+]
+
+[[package]]
+name = "prost-reflect"
+version = "0.16.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "01b80ea363c31af2de2b92e3c07ed1156628f7838c4afb4df75ee78a37fedbd1"
+dependencies = [
+ "prost",
+ "prost-types",
+]
+
+[[package]]
+name = "prost-types"
+version = "0.14.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f94967dc7688f3054c7fac87473ffae4cc4c3904800e2d9f5b857246d8963b0a"
+dependencies = [
+ "prost",
+]
+
+[[package]]
+name = "protoc-bin-vendored"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d1c381df33c98266b5f08186583660090a4ffa0889e76c7e9a5e175f645a67fa"
+dependencies = [
+ "protoc-bin-vendored-linux-aarch_64",
+ "protoc-bin-vendored-linux-ppcle_64",
+ "protoc-bin-vendored-linux-s390_64",
+ "protoc-bin-vendored-linux-x86_32",
+ "protoc-bin-vendored-linux-x86_64",
+ "protoc-bin-vendored-macos-aarch_64",
+ "protoc-bin-vendored-macos-x86_64",
+ "protoc-bin-vendored-win32",
+]
+
+[[package]]
+name = "protoc-bin-vendored-linux-aarch_64"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c350df4d49b5b9e3ca79f7e646fde2377b199e13cfa87320308397e1f37e1a4c"
+
+[[package]]
+name = "protoc-bin-vendored-linux-ppcle_64"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a55a63e6c7244f19b5c6393f025017eb5d793fd5467823a099740a7a4222440c"
+
+[[package]]
+name = "protoc-bin-vendored-linux-s390_64"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1dba5565db4288e935d5330a07c264a4ee8e4a5b4a4e6f4e83fad824cc32f3b0"
+
+[[package]]
+name = "protoc-bin-vendored-linux-x86_32"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8854774b24ee28b7868cd71dccaae8e02a2365e67a4a87a6cd11ee6cdbdf9cf5"
+
+[[package]]
+name = "protoc-bin-vendored-linux-x86_64"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b38b07546580df720fa464ce124c4b03630a6fb83e05c336fea2a241df7e5d78"
+
+[[package]]
+name = "protoc-bin-vendored-macos-aarch_64"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "89278a9926ce312e51f1d999fee8825d324d603213344a9a706daa009f1d8092"
+
+[[package]]
+name = "protoc-bin-vendored-macos-x86_64"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "81745feda7ccfb9471d7a4de888f0652e806d5795b61480605d4943176299756"
+
+[[package]]
+name = "protoc-bin-vendored-win32"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "95067976aca6421a523e491fce939a3e65249bac4b977adee0ee9771568e8aa3"
 
 [[package]]
 name = "quinn"
@@ -2093,6 +2575,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "redox_syscall"
+version = "0.5.18"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ed2bf2547551a7053d6fdfafda3f938979645c44812fbfcda098faae3f1a362d"
+dependencies = [
+ "bitflags 2.13.1",
+]
+
+[[package]]
 name = "redox_users"
 version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2121,6 +2612,18 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 3.0.3",
+]
+
+[[package]]
+name = "regex"
+version = "1.13.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f020237b6c8eed93db2e2cb53c00c60a8e1bc73da7d073199a1180401450218d"
+dependencies = [
+ "aho-corasick",
+ "memchr",
+ "regex-automata",
+ "regex-syntax",
 ]
 
 [[package]]
@@ -2162,25 +2665,6 @@ checksum = "8d3e7aa0a681b232e7cd7f856a53b10603df88ca74b79a8d8088845185492e35"
 dependencies = [
  "array-init",
  "crossbeam",
-]
-
-[[package]]
-name = "rmp"
-version = "0.8.15"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4ba8be72d372b2c9b35542551678538b562e7cf86c3315773cae48dfbfe7790c"
-dependencies = [
- "num-traits",
-]
-
-[[package]]
-name = "rmp-serde"
-version = "1.3.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "72f81bee8c8ef9b577d1681a70ebbc962c232461e397b22c208c43c04b67a155"
-dependencies = [
- "rmp",
- "serde",
 ]
 
 [[package]]
@@ -2239,6 +2723,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "faf0c4a6ece9950b9abdb62b1cfcf2a68b3b67a10ba445b3bb85be2a293d0632"
 dependencies = [
  "nom",
+]
+
+[[package]]
+name = "rustix"
+version = "1.1.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b6fe4565b9518b83ef4f91bb47ce29620ca828bd32cb7e408f0062e9930ba190"
+dependencies = [
+ "bitflags 2.13.1",
+ "errno",
+ "libc",
+ "linux-raw-sys",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
@@ -2514,6 +3011,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "serde_spanned"
+version = "1.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6662b5879511e06e8999a8a235d848113e942c9124f211511b16466ee2995f26"
+dependencies = [
+ "serde_core",
+]
+
+[[package]]
 name = "serde_with"
 version = "3.22.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2564,6 +3070,17 @@ name = "sha1"
 version = "0.10.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a978451301f4db1d02937a4ab3ccce137717b81826e79b7d49ffe3244a13c3b8"
+dependencies = [
+ "cfg-if",
+ "cpufeatures 0.2.17",
+ "digest",
+]
+
+[[package]]
+name = "sha2"
+version = "0.10.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a7507d819769d01a365ab707794a4084392c824f54a7a6a7862f8c3d0892b283"
 dependencies = [
  "cfg-if",
  "cpufeatures 0.2.17",
@@ -2807,6 +3324,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "tempfile"
+version = "3.27.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "32497e9a4c7b38532efcdebeef879707aa9f794296a4f0244f6f69e9bc8574bd"
+dependencies = [
+ "fastrand",
+ "getrandom 0.4.3",
+ "once_cell",
+ "rustix",
+ "windows-sys 0.61.2",
+]
+
+[[package]]
 name = "thiserror"
 version = "1.0.69"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2943,6 +3473,7 @@ dependencies = [
  "bytes",
  "libc",
  "mio",
+ "parking_lot",
  "pin-project-lite",
  "signal-hook-registry",
  "socket2 0.6.5",
@@ -2998,6 +3529,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "toml"
+version = "0.9.12+spec-1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf92845e79fc2e2def6a5d828f0801e29a2f8acc037becc5ab08595c7d5e9863"
+dependencies = [
+ "indexmap 2.14.0",
+ "serde_core",
+ "serde_spanned",
+ "toml_datetime 0.7.5+spec-1.1.0",
+ "toml_parser",
+ "toml_writer",
+ "winnow 0.7.15",
+]
+
+[[package]]
+name = "toml_datetime"
+version = "0.7.5+spec-1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "92e1cfed4a3038bc5a127e35a2d360f145e1f4b971b551a2ba5fd7aedf7e1347"
+dependencies = [
+ "serde_core",
+]
+
+[[package]]
 name = "toml_datetime"
 version = "1.1.1+spec-1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3013,9 +3568,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6975367e4d2ef766d86af01ffad14b622fecc8d4357a998fbc4deb6e9bacaf9b"
 dependencies = [
  "indexmap 2.14.0",
- "toml_datetime",
+ "toml_datetime 1.1.1+spec-1.1.0",
  "toml_parser",
- "winnow",
+ "winnow 1.0.4",
 ]
 
 [[package]]
@@ -3024,8 +3579,14 @@ version = "1.1.3+spec-1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1d38ac1cf9b95face32296c0a3ede1fdc270627c9d9c02a7274dd6d960dc4d56"
 dependencies = [
- "winnow",
+ "winnow 1.0.4",
 ]
+
+[[package]]
+name = "toml_writer"
+version = "1.1.2+spec-1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7d56353a2a665ad0f41a421187180aab746c8c325620617ad883a99a1cbe66d2"
 
 [[package]]
 name = "tracing"
@@ -3552,6 +4113,12 @@ checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
 
 [[package]]
 name = "winnow"
+version = "0.7.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "df79d97927682d2fd8adb29682d1140b343be4ac0f08fd68b7765d9c059d3945"
+
+[[package]]
+name = "winnow"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "23b97319f7b8343df12cc98938e5c3eb436064524c8d2b4e30a1d3a36eecdf81"
@@ -3717,6 +4284,7 @@ dependencies = [
  "serde_json",
  "serde_with",
  "serde_yaml",
+ "toml",
  "tracing",
  "uhlc",
  "validated_struct",
@@ -3938,7 +4506,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "09f2b7f60cdb5ad771d1a4f8e2eda15529e96dbe81c0ad2c1015b4c194347676"
 dependencies = [
  "async-trait",
- "nix",
+ "nix 0.29.0",
  "tokio",
  "tokio-util",
  "tracing",
