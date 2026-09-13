@@ -11,13 +11,19 @@ members = []
 
 [workspace.dependencies]
 anyhow = "1"
-phoxal = { path = "../../../../framework/phoxal", version = "=0.68.0" }
-phoxal-supervisor = { path = "../../../../framework/supervisor", version = "=0.68.0" }
-ddsm115 = { package = "phoxal-component-ddsm115", path = "../../../../framework/components/ddsm115", version = "=0.68.0" }
-bno085 = { package = "phoxal-component-bno085", path = "../../../../framework/components/bno085", version = "=0.68.0" }
-oak_d_lite = { package = "phoxal-component-oak_d_lite", path = "../../../../framework/components/oak_d_lite", version = "=0.68.0" }
-vl53l1x = { package = "phoxal-component-vl53l1x", path = "../../../../framework/components/vl53l1x", version = "=0.68.0" }
-zed_f9p = { package = "phoxal-component-zed_f9p", path = "../../../../framework/components/zed_f9p", version = "=0.68.0" }
+phoxal = { git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+phoxal-supervisor = { git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+ddsm115 = { package = "phoxal-component-ddsm115", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+bno085 = { package = "phoxal-component-bno085", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+oak_d_lite = { package = "phoxal-component-oak_d_lite", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+vl53l1x = { package = "phoxal-component-vl53l1x", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+zed_f9p = { package = "phoxal-component-zed_f9p", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+
+kinematics = { package = "phoxal-service-kinematics", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+world = { package = "phoxal-service-world", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+navigation = { package = "phoxal-service-navigation", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+safety = { package = "phoxal-service-safety", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+motion = { package = "phoxal-service-motion", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
 
 [dependencies]
 anyhow.workspace = true
@@ -28,3 +34,12 @@ bno085.workspace = true
 oak_d_lite.workspace = true
 vl53l1x.workspace = true
 zed_f9p.workspace = true
+
+kinematics.workspace = true
+world.workspace = true
+navigation.workspace = true
+safety.workspace = true
+motion.workspace = true
+
+[profile.dev.package.sha2]
+opt-level = 3

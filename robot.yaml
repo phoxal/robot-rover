@@ -3,25 +3,6 @@ schema: phoxal/robot/v0
 robot:
   id: robot-rover
   model: model.xml
-  motion_limits:
-    max_linear_speed_mps: 0.6
-    max_angular_speed_radps: 2.0
-  kinematic:
-    kind: differential
-    left_actuators:
-      - front_left_drive.motor
-      - rear_left_drive.motor
-    right_actuators:
-      - front_right_drive.motor
-      - rear_right_drive.motor
-    left_encoders:
-      - front_left_drive.encoder
-      - rear_left_drive.encoder
-    right_encoders:
-      - front_right_drive.encoder
-      - rear_right_drive.encoder
-    wheel_radius_m: 0.1
-    wheel_base_m: 0.52
   components:
     front_left_drive:
       component: ddsm115
@@ -93,6 +74,74 @@ robot:
           type: usb
 brain: {}
 
-services: {}
+services:
+  kinematics:
+    config:
+      wheel_radius_m: 0.11
+      wheel_base_m: 0.52
+      left_wheels:
+        - encoder_id: front_left_drive
+          joint_id: front_left_wheel
+          longitudinal_offset_m: 0.18
+          direction_sign: 1
+        - encoder_id: rear_left_drive
+          joint_id: rear_left_wheel
+          longitudinal_offset_m: -0.18
+          direction_sign: 1
+      right_wheels:
+        - encoder_id: front_right_drive
+          joint_id: front_right_wheel
+          longitudinal_offset_m: 0.18
+          direction_sign: -1
+        - encoder_id: rear_right_drive
+          joint_id: rear_right_wheel
+          longitudinal_offset_m: -0.18
+          direction_sign: -1
+  world: {}
+  navigation:
+    config:
+      max_expansions_per_step: 256
+      goal_tolerance_m: 0.15
+  safety:
+    config:
+      input_max_age_ms: 100
+      ranges:
+        - sensor_id: front_center_tof
+  motion:
+    config:
+      wheel_radius_m: 0.11
+      wheel_base_m: 0.52
+      max_linear_mps: 0.6
+      max_angular_radps: 2.0
+      left_wheels:
+        - actuator_id: front_left_drive.motor
+          direction_sign: 1
+        - actuator_id: rear_left_drive.motor
+          direction_sign: 1
+      right_wheels:
+        - actuator_id: front_right_drive.motor
+          direction_sign: -1
+        - actuator_id: rear_right_drive.motor
+          direction_sign: -1
 
-connections: {}
+connections:
+  front_left_drive.actuator: motion.actuators
+  rear_left_drive.actuator: motion.actuators
+  front_right_drive.actuator: motion.actuators
+  rear_right_drive.actuator: motion.actuators
+  kinematics.encoders:
+    - front_left_drive.encoder
+    - rear_left_drive.encoder
+    - front_right_drive.encoder
+    - rear_right_drive.encoder
+  world.pose: kinematics.odometry
+  navigation.localization: kinematics.odometry
+  navigation.map: world.revision
+  safety.world: world.belief
+  safety.world_revision: world.revision
+  safety.motion: motion.status
+  safety.ranges: front_center_tof.range
+  motion.safety: safety.constraints
+  motion.measurements: kinematics.odometry
+  motion.manual: brain.manual
+  motion.autonomous: brain.autonomous
