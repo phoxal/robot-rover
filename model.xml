@@ -1,0 +1,119 @@
+<mujoco model="robot-rover">
+  <compiler angle="radian" />
+  <option timestep="0.012" gravity="0 0 -9.81" />
+  <worldbody>
+    <body name="base_footprint">
+      <body name="base_link" pos="0 0 0.5">
+        <inertial pos="0 0 0" mass="4" diaginertia="0.04 0.09 0.1" />
+        <geom name="chassis" type="box" size="0.25 0.15 0.05" mass="4" />
+
+        <body name="front_left_wheel_mount" pos="0.18 0.26 -0.1" euler="-1.5708 0 0">
+          <body name="front_left_drive">
+            <joint name="front_left_wheel_joint" type="hinge" axis="0 0 1" />
+            <inertial pos="0 0 0" mass="0.6" diaginertia="0.0015 0.0015 0.002" />
+            <geom name="front_left_wheel" type="cylinder" size="0.1 0.04" pos="0 0 -0.02" mass="0.6" />
+          </body>
+        </body>
+        <body name="front_right_wheel_mount" pos="0.18 -0.26 -0.1" euler="1.5708 0 0">
+          <body name="front_right_drive">
+            <joint name="front_right_wheel_joint" type="hinge" axis="0 0 1" />
+            <inertial pos="0 0 0" mass="0.6" diaginertia="0.0015 0.0015 0.002" />
+            <geom name="front_right_wheel" type="cylinder" size="0.1 0.04" pos="0 0 -0.02" mass="0.6" />
+          </body>
+        </body>
+        <body name="rear_left_wheel_mount" pos="-0.18 0.26 -0.1" euler="-1.5708 0 0">
+          <body name="rear_left_drive">
+            <joint name="rear_left_wheel_joint" type="hinge" axis="0 0 1" />
+            <inertial pos="0 0 0" mass="0.6" diaginertia="0.0015 0.0015 0.002" />
+            <geom name="rear_left_wheel" type="cylinder" size="0.1 0.04" pos="0 0 -0.02" mass="0.6" />
+          </body>
+        </body>
+        <body name="rear_right_wheel_mount" pos="-0.18 -0.26 -0.1" euler="1.5708 0 0">
+          <body name="rear_right_drive">
+            <joint name="rear_right_wheel_joint" type="hinge" axis="0 0 1" />
+            <inertial pos="0 0 0" mass="0.6" diaginertia="0.0015 0.0015 0.002" />
+            <geom name="rear_right_wheel" type="cylinder" size="0.1 0.04" pos="0 0 -0.02" mass="0.6" />
+          </body>
+        </body>
+
+        <body name="imu_mount" pos="0 0 0.08">
+          <body name="imu">
+            <inertial pos="0 0 0" mass="0.02" diaginertia="0.000001 0.000001 0.000001" />
+            <geom name="imu_body" type="box" size="0.01 0.01 0.005" mass="0.02" />
+            <site name="imu_site" pos="0 0 0" size="0.001" />
+          </body>
+        </body>
+        <body name="gnss_mount" pos="0 0 0.1">
+          <body name="gnss">
+            <inertial pos="0 0 0" mass="0.032" diaginertia="0.00001 0.00001 0.00002" />
+            <geom name="gnss_body" type="box" size="0.03 0.03 0.006" mass="0.032" />
+            <site name="gnss_site" pos="0 0 0" size="0.001" />
+          </body>
+        </body>
+        <body name="front_camera_mount" pos="0.24 0 0.1" euler="0 0.2618 0">
+          <body name="front_camera">
+            <geom name="camera_body" type="box" size="0.045 0.03 0.014" mass="0.061" />
+            <site name="front_camera_imu_site" pos="0 0 0" size="0.001" />
+            <body name="front_camera_rgb_link">
+              <site name="front_camera_rgb_site" pos="0 0 0" size="0.001" />
+              <camera name="front_camera_rgb" pos="0 0 0" fovy="68.97" resolution="640 480" />
+            </body>
+            <body name="front_camera_depth_link">
+              <site name="front_camera_depth_site" pos="0 0 0" size="0.001" />
+              <camera name="front_camera_depth" pos="0 0 0" fovy="72.91" resolution="640 400" />
+            </body>
+          </body>
+        </body>
+        <body name="front_center_tof_mount" pos="0.26 0 0.03">
+          <body name="front_center_tof">
+            <site name="front_center_tof_site" pos="0 0 0" size="0.001" />
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <velocity
+      name="front_left_drive"
+      joint="front_left_wheel_joint"
+      kv="1"
+      ctrlrange="-20.943951 20.943951"
+      ctrllimited="true"
+    />
+    <velocity
+      name="front_right_drive"
+      joint="front_right_wheel_joint"
+      kv="1"
+      ctrlrange="-20.943951 20.943951"
+      ctrllimited="true"
+    />
+    <velocity
+      name="rear_left_drive"
+      joint="rear_left_wheel_joint"
+      kv="1"
+      ctrlrange="-20.943951 20.943951"
+      ctrllimited="true"
+    />
+    <velocity
+      name="rear_right_drive"
+      joint="rear_right_wheel_joint"
+      kv="1"
+      ctrlrange="-20.943951 20.943951"
+      ctrllimited="true"
+    />
+  </actuator>
+  <sensor>
+    <jointpos name="front_left_drive_encoder_position" joint="front_left_wheel_joint" />
+    <jointvel name="front_left_drive_encoder_velocity" joint="front_left_wheel_joint" />
+    <jointpos name="front_right_drive_encoder_position" joint="front_right_wheel_joint" />
+    <jointvel name="front_right_drive_encoder_velocity" joint="front_right_wheel_joint" />
+    <jointpos name="rear_left_drive_encoder_position" joint="rear_left_wheel_joint" />
+    <jointvel name="rear_left_drive_encoder_velocity" joint="rear_left_wheel_joint" />
+    <jointpos name="rear_right_drive_encoder_position" joint="rear_right_wheel_joint" />
+    <jointvel name="rear_right_drive_encoder_velocity" joint="rear_right_wheel_joint" />
+    <framequat name="imu_orientation" objtype="site" objname="imu_site" />
+    <accelerometer name="imu_accelerometer" site="imu_site" />
+    <gyro name="imu_gyroscope" site="imu_site" />
+    <rangefinder name="front_center_tof_range" site="front_center_tof_site" cutoff="4" />
+  </sensor>
+</mujoco>

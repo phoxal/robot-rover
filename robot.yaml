@@ -2,7 +2,7 @@
 schema: phoxal/robot/v0
 robot:
   id: robot-rover
-  structure: structure.urdf
+  model: model.xml
   motion_limits:
     max_linear_speed_mps: 0.6
     max_angular_speed_radps: 2.0
@@ -33,13 +33,6 @@ robot:
           baud: 115200
         config:
           id: 1
-      parameters:
-        motor:
-          kind: motor
-          direction_sign: 1
-        encoder:
-          kind: encoder
-          direction_sign: 1
     front_right_drive:
       component: ddsm115
       mount_link: front_right_wheel_mount
@@ -50,13 +43,6 @@ robot:
           baud: 115200
         config:
           id: 2
-      parameters:
-        motor:
-          kind: motor
-          direction_sign: -1
-        encoder:
-          kind: encoder
-          direction_sign: -1
     rear_left_drive:
       component: ddsm115
       mount_link: rear_left_wheel_mount
@@ -67,13 +53,6 @@ robot:
           baud: 115200
         config:
           id: 3
-      parameters:
-        motor:
-          kind: motor
-          direction_sign: 1
-        encoder:
-          kind: encoder
-          direction_sign: 1
     rear_right_drive:
       component: ddsm115
       mount_link: rear_right_wheel_mount
@@ -84,13 +63,6 @@ robot:
           baud: 115200
         config:
           id: 4
-      parameters:
-        motor:
-          kind: motor
-          direction_sign: -1
-        encoder:
-          kind: encoder
-          direction_sign: -1
     imu:
       component: bno085
       mount_link: imu_mount
@@ -99,24 +71,12 @@ robot:
           type: i2c
           bus: 1
           address: 74
-      roles:
-        imu:
-          - odometry
     front_camera:
       component: oak_d_lite
       mount_link: front_camera_mount
       driver:
         connection:
           type: usb
-      roles:
-        imu:
-          - localization
-        rgb:
-          - localization
-        depth:
-          - mapping
-          - traversability
-          - localization
     front_center_tof:
       component: vl53l1x
       mount_link: front_center_tof_mount
@@ -125,16 +85,14 @@ robot:
           type: i2c
           bus: 1
           address: 41
-      roles:
-        range:
-          - mapping
-          - traversability
     gnss:
       component: zed_f9p
       mount_link: gnss_mount
       driver:
         connection:
           type: usb
-      roles:
-        gnss:
-          - localization
+brain: {}
+
+services: {}
+
+connections: {}

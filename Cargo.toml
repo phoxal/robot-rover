@@ -10,7 +10,21 @@ resolver = "3"
 members = []
 
 [workspace.dependencies]
-phoxal = "0.67.0"
+anyhow = "1"
+phoxal = { path = "../../../../framework/phoxal", version = "=0.68.0" }
+phoxal-supervisor = { path = "../../../../framework/supervisor", version = "=0.68.0" }
+ddsm115 = { package = "phoxal-component-ddsm115", path = "../../../../framework/components/ddsm115", version = "=0.68.0" }
+bno085 = { package = "phoxal-component-bno085", path = "../../../../framework/components/bno085", version = "=0.68.0" }
+oak_d_lite = { package = "phoxal-component-oak_d_lite", path = "../../../../framework/components/oak_d_lite", version = "=0.68.0" }
+vl53l1x = { package = "phoxal-component-vl53l1x", path = "../../../../framework/components/vl53l1x", version = "=0.68.0" }
+zed_f9p = { package = "phoxal-component-zed_f9p", path = "../../../../framework/components/zed_f9p", version = "=0.68.0" }
 
 [dependencies]
+anyhow.workspace = true
 phoxal.workspace = true
+phoxal-supervisor.workspace = true
+ddsm115.workspace = true
+bno085.workspace = true
+oak_d_lite.workspace = true
+vl53l1x.workspace = true
+zed_f9p.workspace = true
