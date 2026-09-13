@@ -5,8 +5,8 @@ provides a non-application-specific check for framework changes.
 
 The project follows the authored robot project layout and tracks the evolving
 pre-1.0 framework.
-The native robot model is `model.xml`, selected from `robot.yaml`; this project
-does not carry a separate authored world file.
+The native robot model is `model.xml`, selected from `robot.yaml`; the simulation
+environment is owned separately by `simulation/scene.xml`.
 
 This repository is the authoritative source for the current public rover example.
 See <https://phoxal.com> for the project vision and public introduction.

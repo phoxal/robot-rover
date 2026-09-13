@@ -25,7 +25,7 @@ robot:
   components:
     front_left_drive:
       component: ddsm115
-      mount_link: front_left_wheel_mount
+      mount_site: front_left_wheel_mount
       driver:
         connection:
           type: serial
@@ -35,7 +35,7 @@ robot:
           id: 1
     front_right_drive:
       component: ddsm115
-      mount_link: front_right_wheel_mount
+      mount_site: front_right_wheel_mount
       driver:
         connection:
           type: serial
@@ -45,7 +45,7 @@ robot:
           id: 2
     rear_left_drive:
       component: ddsm115
-      mount_link: rear_left_wheel_mount
+      mount_site: rear_left_wheel_mount
       driver:
         connection:
           type: serial
@@ -55,7 +55,7 @@ robot:
           id: 3
     rear_right_drive:
       component: ddsm115
-      mount_link: rear_right_wheel_mount
+      mount_site: rear_right_wheel_mount
       driver:
         connection:
           type: serial
@@ -65,7 +65,7 @@ robot:
           id: 4
     imu:
       component: bno085
-      mount_link: imu_mount
+      mount_site: imu_mount
       driver:
         connection:
           type: i2c
@@ -73,13 +73,13 @@ robot:
           address: 74
     front_camera:
       component: oak_d_lite
-      mount_link: front_camera_mount
+      mount_site: front_camera_mount
       driver:
         connection:
           type: usb
     front_center_tof:
       component: vl53l1x
-      mount_link: front_center_tof_mount
+      mount_site: front_center_tof_mount
       driver:
         connection:
           type: i2c
@@ -87,7 +87,7 @@ robot:
           address: 41
     gnss:
       component: zed_f9p
-      mount_link: gnss_mount
+      mount_site: gnss_mount
       driver:
         connection:
           type: usb
