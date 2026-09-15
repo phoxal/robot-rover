@@ -7,11 +7,7 @@ license = "MIT"
 
 [workspace]
 resolver = "3"
-members = [
-    "scenarios/forward_turn_stop",
-    "scenarios/forward_turn_stop2",
-    "tests/fixtures/control/scenario_forward_turn_stop",
-]
+members = ["tests/fixtures/control/scenario_forward_turn_stop"]
 
 [workspace.dependencies]
 anyhow = "1"
