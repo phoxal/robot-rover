@@ -1,0 +1,12 @@
+[package]
+name = "phoxal-scenario-forward-turn-stop"
+version = "0.0.0"
+edition = "2024"
+publish = false
+description = "Rover canonical scenario: forward, turn, stop."
+
+[lib]
+path = "../forward_turn_stop.rs"
+
+[dependencies]
+phoxal = { path = "/Users/jbernavaprah/RustroverProjects/phoxal/framework/phoxal", features = ["scenario"] }

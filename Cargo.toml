@@ -7,7 +7,11 @@ license = "MIT"
 
 [workspace]
 resolver = "3"
-members = []
+members = [
+    "scenarios/forward_turn_stop",
+    "scenarios/forward_turn_stop2",
+    "tests/fixtures/control/scenario_forward_turn_stop",
+]
 
 [workspace.dependencies]
 anyhow = "1"
@@ -24,6 +28,7 @@ world = { package = "phoxal-service-world", git = "https://github.com/phoxal/fra
 navigation = { package = "phoxal-service-navigation", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
 safety = { package = "phoxal-service-safety", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
 motion = { package = "phoxal-service-motion", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+scenario = { path = "tests/fixtures/control/scenario_forward_turn_stop" }
 
 [dependencies]
 anyhow.workspace = true
@@ -40,6 +45,7 @@ world.workspace = true
 navigation.workspace = true
 safety.workspace = true
 motion.workspace = true
+scenario.workspace = true
 
 [profile.dev.package.sha2]
 opt-level = 3
