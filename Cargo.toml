@@ -13,6 +13,7 @@ members = ["tests/fixtures/control/scenario_forward_turn_stop"]
 anyhow = "1"
 phoxal = { git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
 phoxal-supervisor = { git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+phoxal-project = { git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.1.0" }
 ddsm115 = { package = "phoxal-component-ddsm115", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
 bno085 = { package = "phoxal-component-bno085", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
 oak_d_lite = { package = "phoxal-component-oak_d_lite", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
@@ -25,6 +26,7 @@ navigation = { package = "phoxal-service-navigation", git = "https://github.com/
 safety = { package = "phoxal-service-safety", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
 motion = { package = "phoxal-service-motion", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
 phoxal-port = { git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.1.0" }
+prost = "0.14.4"
 scenario = { path = "tests/fixtures/control/scenario_forward_turn_stop" }
 
 [dependencies]
@@ -32,6 +34,7 @@ anyhow.workspace = true
 phoxal.workspace = true
 phoxal-port.workspace = true
 phoxal-supervisor.workspace = true
+phoxal-project.workspace = true
 ddsm115.workspace = true
 bno085.workspace = true
 oak_d_lite.workspace = true
@@ -43,6 +46,7 @@ world.workspace = true
 navigation.workspace = true
 safety.workspace = true
 motion.workspace = true
+prost.workspace = true
 scenario.workspace = true
 
 [profile.dev.package.sha2]
@@ -59,6 +63,9 @@ opt-level = 3
 phoxal = { path = "../framework/phoxal" }
 phoxal-port = { path = "../framework/crates/port" }
 phoxal-supervisor = { path = "../framework/supervisor" }
+phoxal-project = { path = "../framework/crates/project" }
+phoxal-motion = { path = "../framework/services/motion/contract" }
+phoxal-safety = { path = "../framework/services/safety/contract" }
 phoxal-component-ddsm115 = { path = "../framework/components/ddsm115" }
 phoxal-component-bno085 = { path = "../framework/components/bno085" }
 phoxal-component-oak_d_lite = { path = "../framework/components/oak_d_lite" }
