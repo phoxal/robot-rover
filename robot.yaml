@@ -123,8 +123,6 @@ services:
           direction_sign: -1
         - actuator_id: rear_right_drive.motor
           direction_sign: -1
-  scenario:
-    config: {}
 
 connections:
   front_left_drive.actuator: motion.actuators
@@ -145,5 +143,5 @@ connections:
   safety.ranges: front_center_tof.range
   motion.safety: safety.constraints
   motion.measurements: kinematics.odometry
-  motion.manual: scenario.manual
-  motion.autonomous: scenario.autonomous
+  motion.manual: brain.manual
+  motion.autonomous: brain.autonomous

@@ -7,7 +7,6 @@ license = "MIT"
 
 [workspace]
 resolver = "3"
-members = ["tests/fixtures/control/scenario_forward_turn_stop"]
 
 [workspace.dependencies]
 anyhow = "1"
@@ -27,7 +26,7 @@ safety = { package = "phoxal-service-safety", git = "https://github.com/phoxal/f
 motion = { package = "phoxal-service-motion", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
 phoxal-port = { git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.1.0" }
 prost = "0.14.4"
-scenario = { path = "tests/fixtures/control/scenario_forward_turn_stop" }
+serde_json = "1"
 
 [dependencies]
 anyhow.workspace = true
@@ -47,7 +46,7 @@ navigation.workspace = true
 safety.workspace = true
 motion.workspace = true
 prost.workspace = true
-scenario.workspace = true
+serde_json.workspace = true
 
 [profile.dev.package.sha2]
 opt-level = 3
@@ -55,10 +54,8 @@ opt-level = 3
 # Patch section: redirect every framework crate from the pinned
 # git rev to the local framework checkout so the rover exercises
 # the in-tree scenario feature without bumping the git rev.
-# Gate C1 of followup-5d11cfc1.md (clause 3) previously forbade
-# mixing local SDK with pinned runtime/service owners; the patch
-# below overrides the entire dependency graph uniformly so there
-# is no mixing.
+# Override the entire framework dependency graph with one coherent local
+# checkout while this cross-repository feature is developed and qualified.
 [patch."https://github.com/phoxal/framework.git"]
 phoxal = { path = "../framework/phoxal" }
 phoxal-port = { path = "../framework/crates/port" }

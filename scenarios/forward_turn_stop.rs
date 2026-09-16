@@ -14,33 +14,22 @@
 //!   - `Motion/Emergency` commands port for explicit arm / disarm.
 //!   - `Safety/Status` state capture for the safety observation.
 //!
-//! Validity note: the SDK's [`phoxal::scenario::Validity`] only
-//! models `Permanent` today; renewal-intent-on-expiry is a future
-//! SDK expansion (see followup-5d11cfc1.md §3). The intent steps
-//! below use `Permanent` validity with a comment at each step. The
-//! supervisor still admits the bundle, the simulator still drives
-//! the controlled execution, and the case host still seals the run
-//! against the lifecycle-observed terminal evidence.
-//!
-//! Rover quantum is 2 ms (5 transitions of 2 ms each = 10 ms) — long
-//! enough to drive the full arm → forward → turn → stop → disarm
-//! sequence through the controlled execution.
+//! The six-second program uses persistent intent followed by an explicit
+//! zero setpoint, disarm command, and withdrawal.
+//! The native quantum is 2 ms, so the program completes 3,000 controlled
+//! transitions before verification.
 
 use std::time::Duration;
 
-use phoxal::port::{PortKind, PortSignature};
-use phoxal::scenario::{
-    Action, Capture, Scenario, ScenarioPlan, Step, Validity,
-};
+use phoxal::scenario::{Action, Capture, Scenario, ScenarioPlan, Step, Validity};
 use prost::Message;
 
 use motion::{
-    ApplyEmergencyRequest, Arm, ControlMode, Disarm, MotionIntent,
+    ApplyEmergencyRequest, ApplyEmergencyResponse, Arm, ControlMode, Disarm, MotionIntent,
 };
 
-/// 2 ms quantum × 6 transitions = 12 ms total controlled execution.
-/// Six transitions: arm, forward, forward, turn, stop, disarm.
-pub(crate) const DURATION_MICROS: u64 = 12_000;
+/// Six seconds at the rover's 2 ms native quantum.
+pub(crate) const DURATION_MICROS: u64 = 6_000_000;
 
 /// Forward-turn-stop scenario that drives the rover's canonical
 /// arm → forward → turn → stop → disarm sequence against
@@ -54,97 +43,93 @@ pub struct ForwardTurnStop;
 impl Scenario for ForwardTurnStop {
     fn plan(&self) -> phoxal::Result<ScenarioPlan> {
         let steps = vec![
-            // Boundary 0 (0 ms): Arm the rover through Motion/Emergency
-            // with ControlMode::Manual and the rover's owner identity.
+            // Allow provider observations, kinematics, safety, and Motion to
+            // establish a valid initial cut before requesting authority.
             Step::new(
-                "s00000000",
+                "initial-stop",
                 0,
+                Action::setpoint(
+                    "motion",
+                    motion::ports::MANUAL.signature(),
+                    encode_motion_intent("scenarios/ForwardTurnStop", 0.0, 0.0),
+                    Validity::Permanent,
+                )
+                .map_err(|e| phoxal::anyhow!("initial stop setpoint: {e}"))?,
+            ),
+            Step::new(
+                "arm",
+                100,
                 Action::command(
                     "motion",
-                    emergency_signature(),
+                    motion::ports::EMERGENCY.signature(),
                     encode_arm_request("scenarios/ForwardTurnStop"),
                     "arm-rover",
-                    Duration::from_micros(DURATION_MICROS),
+                    Duration::from_secs(1),
                     Duration::from_secs(1),
                 )
                 .map_err(|e| phoxal::anyhow!("arm action: {e}"))?,
             ),
-            // Boundary 1 (2 ms): Forward setpoint through Motion/Manual
-            // with linear_x_mps = 0.5. The intent is permanent for the
-            // simulator's duration; finite validity + renewal is a
-            // future SDK expansion.
             Step::new(
-                "s00000001",
-                1,
+                "forward",
+                150,
                 Action::setpoint(
                     "motion",
-                    manual_setpoint_signature(),
+                    motion::ports::MANUAL.signature(),
                     encode_motion_intent("scenarios/ForwardTurnStop", 0.5, 0.0),
                     Validity::Permanent,
                 )
                 .map_err(|e| phoxal::anyhow!("forward setpoint: {e}"))?,
             ),
-            // Boundary 2 (4 ms): Continue forward with the same intent.
             Step::new(
-                "s00000002",
-                2,
+                "turn",
+                900,
                 Action::setpoint(
                     "motion",
-                    manual_setpoint_signature(),
-                    encode_motion_intent("scenarios/ForwardTurnStop", 0.5, 0.0),
-                    Validity::Permanent,
-                )
-                .map_err(|e| phoxal::anyhow!("forward continue: {e}"))?,
-            ),
-            // Boundary 3 (6 ms): Turn setpoint with linear = 0,
-            // angular_z = 0.5 rad/s.
-            Step::new(
-                "s00000003",
-                3,
-                Action::setpoint(
-                    "motion",
-                    manual_setpoint_signature(),
-                    encode_motion_intent("scenarios/ForwardTurnStop", 0.0, 0.5),
+                    motion::ports::MANUAL.signature(),
+                    encode_motion_intent("scenarios/ForwardTurnStop", 0.0, 2.0),
                     Validity::Permanent,
                 )
                 .map_err(|e| phoxal::anyhow!("turn setpoint: {e}"))?,
             ),
-            // Boundary 4 (8 ms): Stop setpoint with linear = 0 and
-            // angular = 0. The Motion contract uses zero-velocity
-            // intents to stop, not a withdraw; the rover's Motion
-            // service is responsible for the controlled deceleration.
             Step::new(
-                "s00000004",
-                4,
+                "stop",
+                2_400,
                 Action::setpoint(
                     "motion",
-                    manual_setpoint_signature(),
+                    motion::ports::MANUAL.signature(),
                     encode_motion_intent("scenarios/ForwardTurnStop", 0.0, 0.0),
                     Validity::Permanent,
                 )
                 .map_err(|e| phoxal::anyhow!("stop setpoint: {e}"))?,
             ),
-            // Boundary 5 (10 ms): Disarm through Motion/Emergency.
             Step::new(
-                "s00000005",
-                5,
+                "disarm",
+                2_800,
                 Action::command(
                     "motion",
-                    emergency_signature(),
+                    motion::ports::EMERGENCY.signature(),
                     encode_disarm_request(),
                     "disarm-rover",
-                    Duration::from_micros(DURATION_MICROS),
+                    Duration::from_secs(1),
                     Duration::from_secs(1),
                 )
                 .map_err(|e| phoxal::anyhow!("disarm action: {e}"))?,
             ),
+            Step::new(
+                "withdraw-manual",
+                2_850,
+                Action::withdraw("motion", motion::ports::MANUAL.signature())
+                    .map_err(|e| phoxal::anyhow!("manual withdraw: {e}"))?,
+            ),
         ];
 
         let captures = vec![
-            Capture::state("motion/status", motion_status_signature())
+            Capture::state("motion/status", motion::ports::STATUS.signature())
                 .map_err(|e| phoxal::anyhow!("motion status capture: {e}"))?,
-            Capture::state("safety/status", safety_status_signature())
+            Capture::state("safety/status", safety::ports::STATUS.signature())
                 .map_err(|e| phoxal::anyhow!("safety status capture: {e}"))?,
+            Capture::native_body("robot-rover", "SI", "world")
+                .map_err(|e| phoxal::anyhow!("native body capture: {e}"))?,
         ];
 
         ScenarioPlan::with_steps(
@@ -176,16 +161,107 @@ impl Scenario for ForwardTurnStop {
             "s00000003",
             "s00000004",
             "s00000005",
+            "s00000006",
         ] {
-            run.outcome(boundary)
-                .ok_or_else(|| phoxal::anyhow!("ForwardTurnStop: step {boundary} has no recorded outcome"))?;
+            run.outcome(boundary).ok_or_else(|| {
+                phoxal::anyhow!("ForwardTurnStop: step {boundary} has no recorded outcome")
+            })?;
+        }
+        for label in ["arm-rover", "disarm-rover"] {
+            let reply = run.command_reply(label).ok_or_else(|| {
+                phoxal::anyhow!("ForwardTurnStop: command reply `{label}` missing")
+            })?;
+            let phoxal::scenario::CommandReply::Accepted { response_bytes } = reply else {
+                return Err(phoxal::anyhow!(
+                    "ForwardTurnStop: command `{label}` was not accepted"
+                ));
+            };
+            let response =
+                ApplyEmergencyResponse::decode(response_bytes.as_slice()).map_err(|error| {
+                    phoxal::anyhow!(
+                        "ForwardTurnStop: command `{label}` returned invalid protobuf: {error}"
+                    )
+                })?;
+            if !matches!(
+                response.decision,
+                Some(motion::apply_emergency_response::Decision::Accepted(_))
+            ) {
+                return Err(phoxal::anyhow!(
+                    "ForwardTurnStop: command `{label}` returned a refusal"
+                ));
+            }
         }
 
         // Motion and safety status captures must be observed.
-        run.capture("motion/status")
+        let motion_status = run
+            .capture("motion/status")
             .ok_or_else(|| phoxal::anyhow!("ForwardTurnStop: motion/status capture missing"))?;
+        let phoxal::scenario::CaptureRecord::State(motion_status) = motion_status else {
+            return Err(phoxal::anyhow!(
+                "ForwardTurnStop: motion/status is not state evidence"
+            ));
+        };
+        let motion_status =
+            motion::MotionStatus::decode(motion_status.as_slice()).map_err(|error| {
+                phoxal::anyhow!("ForwardTurnStop: invalid motion status protobuf: {error}")
+            })?;
+        if motion_status.mode != ControlMode::Disarmed as i32 || !motion_status.stopped {
+            return Err(phoxal::anyhow!(
+                "ForwardTurnStop: final Motion status is not disarmed and stopped"
+            ));
+        }
         run.capture("safety/status")
             .ok_or_else(|| phoxal::anyhow!("ForwardTurnStop: safety/status capture missing"))?;
+        let body = run
+            .capture("robot-rover")
+            .ok_or_else(|| phoxal::anyhow!("ForwardTurnStop: native body capture missing"))?;
+        let phoxal::scenario::CaptureRecord::NativeBody(bytes) = body else {
+            return Err(phoxal::anyhow!(
+                "ForwardTurnStop: robot-rover capture is not native body evidence"
+            ));
+        };
+        let samples: Vec<phoxal_project::NativeBodySample> = serde_json::from_slice(bytes)
+            .map_err(|error| {
+                phoxal::anyhow!("ForwardTurnStop: invalid native body evidence: {error}")
+            })?;
+        let first = samples
+            .first()
+            .ok_or_else(|| phoxal::anyhow!("ForwardTurnStop: native body history is empty"))?;
+        let last = samples
+            .last()
+            .ok_or_else(|| phoxal::anyhow!("ForwardTurnStop: native body history is empty"))?;
+        let displacement = ((last.position_m[0] - first.position_m[0]).powi(2)
+            + (last.position_m[1] - first.position_m[1]).powi(2))
+        .sqrt();
+        if displacement < 0.5 {
+            return Err(phoxal::anyhow!(
+                "ForwardTurnStop: rover displacement {displacement:.3} m is below 0.5 m"
+            ));
+        }
+        let yaw_change = samples.windows(2).fold(0.0, |total, pair| {
+            let mut delta = yaw(pair[1].orientation_wxyz) - yaw(pair[0].orientation_wxyz);
+            if delta > std::f64::consts::PI {
+                delta -= std::f64::consts::TAU;
+            } else if delta < -std::f64::consts::PI {
+                delta += std::f64::consts::TAU;
+            }
+            total + delta
+        });
+        if yaw_change.abs() < 1.0 {
+            return Err(phoxal::anyhow!(
+                "ForwardTurnStop: rover yaw change {yaw_change:.3} rad is below 1.0 rad"
+            ));
+        }
+        let final_linear_speed = (last.linear_velocity_mps[0].powi(2)
+            + last.linear_velocity_mps[1].powi(2)
+            + last.linear_velocity_mps[2].powi(2))
+        .sqrt();
+        if final_linear_speed >= 0.03 || last.angular_velocity_radps[2].abs() >= 0.05 {
+            return Err(phoxal::anyhow!(
+                "ForwardTurnStop: rover did not stop (linear {final_linear_speed:.3} m/s, yaw {:.3} rad/s)",
+                last.angular_velocity_radps[2]
+            ));
+        }
 
         // The terminal evidence must carry the lifecycle-observed
         // supervisor-run identity (the bundle's run_id, not a
@@ -225,50 +301,6 @@ impl Scenario for ForwardTurnStop {
     }
 }
 
-fn manual_setpoint_signature() -> PortSignature {
-    PortSignature::new(
-        "motion/manual",
-        "phoxal.motion.v1.Motion",
-        "Manual",
-        PortKind::Setpoint,
-        "phoxal.motion.v1.MotionIntent",
-        "phoxal.motion.v1.MotionIntent",
-    )
-}
-
-fn motion_status_signature() -> PortSignature {
-    PortSignature::new(
-        "motion/status",
-        "phoxal.motion.v1.Motion",
-        "Status",
-        PortKind::State,
-        "google.protobuf.Empty",
-        "phoxal.motion.v1.MotionStatus",
-    )
-}
-
-fn safety_status_signature() -> PortSignature {
-    PortSignature::new(
-        "safety/status",
-        "phoxal.safety.v1.Safety",
-        "Status",
-        PortKind::State,
-        "google.protobuf.Empty",
-        "phoxal.safety.v1.SafetyStatus",
-    )
-}
-
-fn emergency_signature() -> PortSignature {
-    PortSignature::new(
-        "motion/emergency",
-        "phoxal.motion.v1.Motion",
-        "Emergency",
-        PortKind::Commands,
-        "phoxal.motion.v1.ApplyEmergencyRequest",
-        "phoxal.motion.v1.ApplyEmergencyResponse",
-    )
-}
-
 fn encode_motion_intent(owner_id: &str, linear_x_mps: f64, angular_z_radps: f64) -> Vec<u8> {
     let intent = MotionIntent {
         owner_id: owner_id.to_owned(),
@@ -276,6 +308,10 @@ fn encode_motion_intent(owner_id: &str, linear_x_mps: f64, angular_z_radps: f64)
         angular_z_radps,
     };
     intent.encode_to_vec()
+}
+
+fn yaw([w, x, y, z]: [f64; 4]) -> f64 {
+    (2.0 * (w * z + x * y)).atan2(1.0 - 2.0 * (y * y + z * z))
 }
 
 fn encode_arm_request(owner_id: &str) -> Vec<u8> {
@@ -290,9 +326,7 @@ fn encode_arm_request(owner_id: &str) -> Vec<u8> {
 
 fn encode_disarm_request() -> Vec<u8> {
     let request = ApplyEmergencyRequest {
-        command: Some(motion::apply_emergency_request::Command::Disarm(
-            Disarm {},
-        )),
+        command: Some(motion::apply_emergency_request::Command::Disarm(Disarm {})),
     };
     request.encode_to_vec()
 }
