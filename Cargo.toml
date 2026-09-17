@@ -61,8 +61,6 @@ phoxal = { path = "../framework/phoxal" }
 phoxal-port = { path = "../framework/crates/port" }
 phoxal-supervisor = { path = "../framework/supervisor" }
 phoxal-project = { path = "../framework/crates/project" }
-phoxal-motion = { path = "../framework/services/motion/contract" }
-phoxal-safety = { path = "../framework/services/safety/contract" }
 phoxal-component-ddsm115 = { path = "../framework/components/ddsm115" }
 phoxal-component-bno085 = { path = "../framework/components/bno085" }
 phoxal-component-oak_d_lite = { path = "../framework/components/oak_d_lite" }

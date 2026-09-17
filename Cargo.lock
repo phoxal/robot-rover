@@ -2265,8 +2265,6 @@ version = "0.68.0"
 dependencies = [
  "anyhow",
  "phoxal",
- "phoxal-build",
- "phoxal-port",
  "prost",
  "serde",
 ]
@@ -2277,10 +2275,8 @@ version = "0.68.0"
 dependencies = [
  "anyhow",
  "phoxal",
- "phoxal-build",
- "phoxal-motion",
- "phoxal-port",
  "phoxal-robotics",
+ "phoxal-service-motion",
  "prost",
  "serde",
 ]
@@ -2291,8 +2287,6 @@ version = "0.68.0"
 dependencies = [
  "anyhow",
  "phoxal",
- "phoxal-build",
- "phoxal-port",
  "prost",
  "serde",
 ]
@@ -2303,8 +2297,6 @@ version = "0.68.0"
 dependencies = [
  "anyhow",
  "phoxal",
- "phoxal-build",
- "phoxal-port",
  "phoxal-robotics",
  "prost",
  "serde",
@@ -2316,21 +2308,8 @@ version = "0.68.0"
 dependencies = [
  "anyhow",
  "phoxal",
- "phoxal-build",
- "phoxal-port",
  "prost",
  "serde",
-]
-
-[[package]]
-name = "phoxal-kinematics"
-version = "0.1.0"
-dependencies = [
- "phoxal-build",
- "phoxal-port",
- "phoxal-robotics",
- "prost",
- "thiserror 2.0.20",
 ]
 
 [[package]]
@@ -2342,26 +2321,6 @@ dependencies = [
  "quote",
  "serde_derive_internals 0.29.1",
  "syn 2.0.119",
-]
-
-[[package]]
-name = "phoxal-motion"
-version = "0.1.0"
-dependencies = [
- "phoxal-build",
- "phoxal-port",
- "prost",
- "thiserror 2.0.20",
-]
-
-[[package]]
-name = "phoxal-navigation"
-version = "0.1.0"
-dependencies = [
- "phoxal-build",
- "phoxal-port",
- "prost",
- "thiserror 2.0.20",
 ]
 
 [[package]]
@@ -2421,20 +2380,7 @@ dependencies = [
 name = "phoxal-robotics"
 version = "0.1.0"
 dependencies = [
- "phoxal-build",
- "prost",
- "thiserror 2.0.20",
-]
-
-[[package]]
-name = "phoxal-safety"
-version = "0.1.0"
-dependencies = [
- "phoxal-build",
- "phoxal-motion",
- "phoxal-port",
- "phoxal-robotics",
- "phoxal-world",
+ "phoxal",
  "prost",
  "thiserror 2.0.20",
 ]
@@ -2443,58 +2389,52 @@ dependencies = [
 name = "phoxal-service-kinematics"
 version = "0.68.0"
 dependencies = [
- "anyhow",
  "phoxal",
- "phoxal-kinematics",
  "phoxal-robotics",
- "serde",
+ "prost",
+ "thiserror 2.0.20",
 ]
 
 [[package]]
 name = "phoxal-service-motion"
 version = "0.68.0"
 dependencies = [
- "anyhow",
  "phoxal",
- "phoxal-kinematics",
- "phoxal-motion",
- "phoxal-safety",
- "serde",
+ "prost",
+ "thiserror 2.0.20",
 ]
 
 [[package]]
 name = "phoxal-service-navigation"
 version = "0.68.0"
 dependencies = [
- "anyhow",
  "phoxal",
- "phoxal-kinematics",
- "phoxal-navigation",
- "phoxal-world",
- "serde",
+ "phoxal-service-kinematics",
+ "phoxal-service-world",
+ "prost",
+ "thiserror 2.0.20",
 ]
 
 [[package]]
 name = "phoxal-service-safety"
 version = "0.68.0"
 dependencies = [
- "anyhow",
  "phoxal",
- "phoxal-motion",
- "phoxal-safety",
- "phoxal-world",
- "serde",
+ "phoxal-robotics",
+ "phoxal-service-motion",
+ "phoxal-service-world",
+ "prost",
+ "thiserror 2.0.20",
 ]
 
 [[package]]
 name = "phoxal-service-world"
 version = "0.68.0"
 dependencies = [
- "anyhow",
  "phoxal",
- "phoxal-kinematics",
- "phoxal-world",
- "serde",
+ "phoxal-service-kinematics",
+ "prost",
+ "thiserror 2.0.20",
 ]
 
 [[package]]
@@ -2517,17 +2457,6 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "zenoh",
-]
-
-[[package]]
-name = "phoxal-world"
-version = "0.1.0"
-dependencies = [
- "phoxal-build",
- "phoxal-kinematics",
- "phoxal-port",
- "prost",
- "thiserror 2.0.20",
 ]
 
 [[package]]
