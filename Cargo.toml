@@ -48,25 +48,6 @@ serde_json.workspace = true
 [profile.dev.package.sha2]
 opt-level = 3
 
-# Patch section: redirect every framework crate from the pinned
-# git rev to the local framework checkout so the rover exercises
-# the in-tree scenario feature without bumping the git rev.
-# Override the entire framework dependency graph with one coherent local
-# checkout while this cross-repository feature is developed and qualified.
-[patch."https://github.com/phoxal/framework.git"]
-phoxal = { path = "../framework/phoxal" }
-phoxal-supervisor = { path = "../framework/supervisor" }
-phoxal-component-ddsm115 = { path = "../framework/components/ddsm115" }
-phoxal-component-bno085 = { path = "../framework/components/bno085" }
-phoxal-component-oak_d_lite = { path = "../framework/components/oak_d_lite" }
-phoxal-component-vl53l1x = { path = "../framework/components/vl53l1x" }
-phoxal-component-zed_f9p = { path = "../framework/components/zed_f9p" }
-phoxal-service-kinematics = { path = "../framework/services/kinematics" }
-phoxal-service-world = { path = "../framework/services/world" }
-phoxal-service-navigation = { path = "../framework/services/navigation" }
-phoxal-service-safety = { path = "../framework/services/safety" }
-phoxal-service-motion = { path = "../framework/services/motion" }
-
 [[test]]
 name = "phoxal-scenarios"
 path = ".phoxal/generated/scenarios/main.rs"

@@ -1897,6 +1897,7 @@ dependencies = [
 [[package]]
 name = "phoxal"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
@@ -1922,6 +1923,7 @@ dependencies = [
 [[package]]
 name = "phoxal-artifact-format"
 version = "0.1.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "serde",
  "serde_json",
@@ -1933,6 +1935,7 @@ dependencies = [
 [[package]]
 name = "phoxal-build"
 version = "0.1.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "heck",
  "prost",
@@ -1946,6 +1949,7 @@ dependencies = [
 [[package]]
 name = "phoxal-component-bno085"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "anyhow",
  "phoxal",
@@ -1956,6 +1960,7 @@ dependencies = [
 [[package]]
 name = "phoxal-component-ddsm115"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "anyhow",
  "phoxal",
@@ -1967,6 +1972,7 @@ dependencies = [
 [[package]]
 name = "phoxal-component-oak_d_lite"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "anyhow",
  "phoxal",
@@ -1977,6 +1983,7 @@ dependencies = [
 [[package]]
 name = "phoxal-component-vl53l1x"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "anyhow",
  "phoxal",
@@ -1987,6 +1994,7 @@ dependencies = [
 [[package]]
 name = "phoxal-component-zed_f9p"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "anyhow",
  "phoxal",
@@ -1997,6 +2005,7 @@ dependencies = [
 [[package]]
 name = "phoxal-macros"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -2029,6 +2038,7 @@ dependencies = [
 [[package]]
 name = "phoxal-service-kinematics"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "phoxal",
  "prost",
@@ -2038,6 +2048,7 @@ dependencies = [
 [[package]]
 name = "phoxal-service-motion"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "phoxal",
  "prost",
@@ -2047,6 +2058,7 @@ dependencies = [
 [[package]]
 name = "phoxal-service-navigation"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "phoxal",
  "phoxal-service-kinematics",
@@ -2058,6 +2070,7 @@ dependencies = [
 [[package]]
 name = "phoxal-service-safety"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "phoxal",
  "phoxal-service-motion",
@@ -2069,6 +2082,7 @@ dependencies = [
 [[package]]
 name = "phoxal-service-world"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "phoxal",
  "phoxal-service-kinematics",
@@ -2079,6 +2093,7 @@ dependencies = [
 [[package]]
 name = "phoxal-supervisor"
 version = "0.68.0"
+source = "git+https://github.com/phoxal/framework.git?rev=61dd6d19f#61dd6d19fa067927015a0455e30a7142e90184fe"
 dependencies = [
  "anyhow",
  "clap",
