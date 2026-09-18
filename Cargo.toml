@@ -10,30 +10,27 @@ resolver = "3"
 
 [workspace.dependencies]
 anyhow = "1"
-phoxal = { git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
-phoxal-supervisor = { git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
-phoxal-project = { git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.1.0" }
-ddsm115 = { package = "phoxal-component-ddsm115", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
-bno085 = { package = "phoxal-component-bno085", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
-oak_d_lite = { package = "phoxal-component-oak_d_lite", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
-vl53l1x = { package = "phoxal-component-vl53l1x", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
-zed_f9p = { package = "phoxal-component-zed_f9p", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
+phoxal = { git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+phoxal-supervisor = { git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+ddsm115 = { package = "phoxal-component-ddsm115", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+bno085 = { package = "phoxal-component-bno085", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+oak_d_lite = { package = "phoxal-component-oak_d_lite", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+vl53l1x = { package = "phoxal-component-vl53l1x", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+zed_f9p = { package = "phoxal-component-zed_f9p", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
 
-kinematics = { package = "phoxal-service-kinematics", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
-world = { package = "phoxal-service-world", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
-navigation = { package = "phoxal-service-navigation", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
-safety = { package = "phoxal-service-safety", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
-motion = { package = "phoxal-service-motion", git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" }
-phoxal-port = { git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.1.0" }
+kinematics = { package = "phoxal-service-kinematics", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+world = { package = "phoxal-service-world", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+navigation = { package = "phoxal-service-navigation", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+safety = { package = "phoxal-service-safety", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+motion = { package = "phoxal-service-motion", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+
 prost = "0.14.4"
 serde_json = "1"
 
 [dependencies]
 anyhow.workspace = true
 phoxal.workspace = true
-phoxal-port.workspace = true
 phoxal-supervisor.workspace = true
-phoxal-project.workspace = true
 ddsm115.workspace = true
 bno085.workspace = true
 oak_d_lite.workspace = true
@@ -58,9 +55,7 @@ opt-level = 3
 # checkout while this cross-repository feature is developed and qualified.
 [patch."https://github.com/phoxal/framework.git"]
 phoxal = { path = "../framework/phoxal" }
-phoxal-port = { path = "../framework/crates/port" }
 phoxal-supervisor = { path = "../framework/supervisor" }
-phoxal-project = { path = "../framework/crates/project" }
 phoxal-component-ddsm115 = { path = "../framework/components/ddsm115" }
 phoxal-component-bno085 = { path = "../framework/components/bno085" }
 phoxal-component-oak_d_lite = { path = "../framework/components/oak_d_lite" }
@@ -79,4 +74,4 @@ harness = false
 test = false
 
 [dev-dependencies]
-phoxal = { git = "https://github.com/phoxal/framework.git", rev = "ca8926c4d22d3988f346c0b2a1ca20c0e7ce9ad5", version = "=0.68.0" , features = ["scenario"] }
+phoxal = { git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" , features = ["scenario", "port"] }

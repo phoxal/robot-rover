@@ -220,7 +220,7 @@ impl Scenario for ForwardTurnStop {
                 "ForwardTurnStop: robot-rover capture is not native body evidence"
             ));
         };
-        let samples: Vec<phoxal_project::NativeBodySample> = serde_json::from_slice(bytes)
+        let samples: Vec<phoxal::scenario::NativeBodySample> = serde_json::from_slice(bytes)
             .map_err(|error| {
                 phoxal::anyhow!("ForwardTurnStop: invalid native body evidence: {error}")
             })?;
