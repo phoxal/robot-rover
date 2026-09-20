@@ -25,11 +25,11 @@ These authored parameters are a sandbox model, not hardware calibration or proof
 
 ## Run the movement scenario
 
-Install `cargo-phoxal`, build or install the packaged simulator, then run:
+Install `cargo-phoxal`, provision its managed simulator, then run:
 
 ```sh
-cargo phoxal simulation scenario run ForwardTurnStop --locked --release \
-  --simulator '/Applications/Phoxal Simulator.app/Contents/MacOS/phoxal-simulator-mujoco'
+cargo phoxal simulation install
+cargo phoxal simulation scenario run ForwardTurnStop --locked --release
 ```
 
 The desktop opens automatically, drives forward, turns, and stops.

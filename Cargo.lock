@@ -1978,6 +1978,7 @@ name = "phoxal-robot-project"
 version = "0.0.0-dev.1"
 dependencies = [
  "anyhow",
+ "clap",
  "phoxal",
  "phoxal-component-ddsm115",
  "phoxal-component-vl53l1x",
