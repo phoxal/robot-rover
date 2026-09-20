@@ -1,7 +1,8 @@
 [package]
 name = "phoxal-robot-project"
-version = "0.0.0"
+version = "0.0.0-dev.1"
 edition = "2024"
+rust-version = "1.88"
 publish = false
 license = "MIT"
 
@@ -10,19 +11,15 @@ resolver = "3"
 
 [workspace.dependencies]
 anyhow = "1"
-phoxal = { git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
-phoxal-supervisor = { git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
-ddsm115 = { package = "phoxal-component-ddsm115", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
-bno085 = { package = "phoxal-component-bno085", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
-oak_d_lite = { package = "phoxal-component-oak_d_lite", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
-vl53l1x = { package = "phoxal-component-vl53l1x", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
-zed_f9p = { package = "phoxal-component-zed_f9p", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+phoxal = { git = "https://github.com/phoxal/framework.git", rev = "40bc9951e", version = "=0.0.0-dev.1" }
+phoxal-supervisor = { git = "https://github.com/phoxal/framework.git", rev = "40bc9951e", version = "=0.0.0-dev.1" }
+ddsm115 = { package = "phoxal-component-ddsm115", git = "https://github.com/phoxal/framework.git", rev = "40bc9951e", version = "=0.0.0-dev.1" }
+vl53l1x = { package = "phoxal-component-vl53l1x", git = "https://github.com/phoxal/framework.git", rev = "40bc9951e", version = "=0.0.0-dev.1" }
 
-kinematics = { package = "phoxal-service-kinematics", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
-world = { package = "phoxal-service-world", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
-navigation = { package = "phoxal-service-navigation", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
-safety = { package = "phoxal-service-safety", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
-motion = { package = "phoxal-service-motion", git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" }
+kinematics = { package = "phoxal-service-kinematics", git = "https://github.com/phoxal/framework.git", rev = "40bc9951e", version = "=0.0.0-dev.1" }
+world = { package = "phoxal-service-world", git = "https://github.com/phoxal/framework.git", rev = "40bc9951e", version = "=0.0.0-dev.1" }
+safety = { package = "phoxal-service-safety", git = "https://github.com/phoxal/framework.git", rev = "40bc9951e", version = "=0.0.0-dev.1" }
+motion = { package = "phoxal-service-motion", git = "https://github.com/phoxal/framework.git", rev = "40bc9951e", version = "=0.0.0-dev.1" }
 
 prost = "0.14.4"
 serde_json = "1"
@@ -32,14 +29,10 @@ anyhow.workspace = true
 phoxal.workspace = true
 phoxal-supervisor.workspace = true
 ddsm115.workspace = true
-bno085.workspace = true
-oak_d_lite.workspace = true
 vl53l1x.workspace = true
-zed_f9p.workspace = true
 
 kinematics.workspace = true
 world.workspace = true
-navigation.workspace = true
 safety.workspace = true
 motion.workspace = true
 prost.workspace = true
@@ -55,4 +48,4 @@ harness = false
 test = false
 
 [dev-dependencies]
-phoxal = { git = "https://github.com/phoxal/framework.git", rev = "61dd6d19f", version = "=0.68.0" , features = ["scenario", "port"] }
+phoxal = { git = "https://github.com/phoxal/framework.git", rev = "40bc9951e", version = "=0.0.0-dev.1", features = ["scenario", "port"] }

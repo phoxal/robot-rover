@@ -44,20 +44,6 @@ robot:
           baud: 115200
         config:
           id: 4
-    imu:
-      component: bno085
-      mount_site: imu_mount
-      driver:
-        connection:
-          type: i2c
-          bus: 1
-          address: 74
-    front_camera:
-      component: oak_d_lite
-      mount_site: front_camera_mount
-      driver:
-        connection:
-          type: usb
     front_center_tof:
       component: vl53l1x
       mount_site: front_center_tof_mount
@@ -66,12 +52,6 @@ robot:
           type: i2c
           bus: 1
           address: 41
-    gnss:
-      component: zed_f9p
-      mount_site: gnss_mount
-      driver:
-        connection:
-          type: usb
 brain: {}
 
 services:
@@ -98,10 +78,6 @@ services:
           longitudinal_offset_m: -0.18
           direction_sign: -1
   world: {}
-  navigation:
-    config:
-      max_expansions_per_step: 256
-      goal_tolerance_m: 0.15
   safety:
     config:
       input_max_age_ms: 100
@@ -135,8 +111,6 @@ connections:
     - front_right_drive.encoder
     - rear_right_drive.encoder
   world.pose: kinematics.odometry
-  navigation.localization: kinematics.odometry
-  navigation.map: world.revision
   safety.world: world.belief
   safety.world_revision: world.revision
   safety.motion: motion.status

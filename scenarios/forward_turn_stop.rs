@@ -16,7 +16,7 @@
 //!
 //! The six-second program uses persistent intent followed by an explicit
 //! zero setpoint, disarm command, and withdrawal.
-//! The native quantum is 2 ms, so the program completes 3,000 controlled
+//! The native quantum is 10 ms, so the program completes 600 controlled
 //! transitions before verification.
 
 use std::time::Duration;
@@ -28,7 +28,7 @@ use motion::{
     ApplyEmergencyRequest, ApplyEmergencyResponse, Arm, ControlMode, Disarm, MotionIntent,
 };
 
-/// Six seconds at the rover's 2 ms native quantum.
+/// Six seconds at the rover's 10 ms native quantum.
 pub(crate) const DURATION_MICROS: u64 = 6_000_000;
 
 /// Forward-turn-stop scenario that drives the rover's canonical
@@ -58,7 +58,7 @@ impl Scenario for ForwardTurnStop {
             ),
             Step::new(
                 "arm",
-                100,
+                20,
                 Action::command(
                     "motion",
                     motion::ports::EMERGENCY.signature(),
@@ -71,7 +71,7 @@ impl Scenario for ForwardTurnStop {
             ),
             Step::new(
                 "forward",
-                150,
+                30,
                 Action::setpoint(
                     "motion",
                     motion::ports::MANUAL.signature(),
@@ -82,18 +82,18 @@ impl Scenario for ForwardTurnStop {
             ),
             Step::new(
                 "turn",
-                900,
+                180,
                 Action::setpoint(
                     "motion",
                     motion::ports::MANUAL.signature(),
-                    encode_motion_intent("scenarios/ForwardTurnStop", 0.0, 2.0),
+                    encode_motion_intent("scenarios/ForwardTurnStop", 0.0, 2.2),
                     Validity::Permanent,
                 )
                 .map_err(|e| phoxal::anyhow!("turn setpoint: {e}"))?,
             ),
             Step::new(
                 "stop",
-                2_400,
+                500,
                 Action::setpoint(
                     "motion",
                     motion::ports::MANUAL.signature(),
@@ -104,7 +104,7 @@ impl Scenario for ForwardTurnStop {
             ),
             Step::new(
                 "disarm",
-                2_800,
+                560,
                 Action::command(
                     "motion",
                     motion::ports::EMERGENCY.signature(),
@@ -117,7 +117,7 @@ impl Scenario for ForwardTurnStop {
             ),
             Step::new(
                 "withdraw-manual",
-                2_850,
+                570,
                 Action::withdraw("motion", motion::ports::MANUAL.signature())
                     .map_err(|e| phoxal::anyhow!("manual withdraw: {e}"))?,
             ),
