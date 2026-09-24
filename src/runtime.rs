@@ -29,13 +29,19 @@ impl Runtime for Brain {
 #[allow(dead_code, reason = "generated output projections")]
 impl Brain {
     /// No operator or autonomous mission is selected at startup.
-    #[phoxal::runtime::outputs::setpoint(port = motion::ports::MANUAL, max_bytes = 256, valid_for_ms = 100)]
-    fn manual(&self, _state: &()) -> Option<motion::MotionIntent> {
+    #[phoxal::runtime::outputs::setpoint(port = crate::api::__contracts::phoxal::motion::v1::motion::methods::MANUAL.__setpoint_port(), max_bytes = 256, valid_for_ms = 100)]
+    fn manual(
+        &self,
+        _state: &(),
+    ) -> Option<crate::api::__contracts::phoxal::motion::v1::MotionIntent> {
         None
     }
 
-    #[phoxal::runtime::outputs::setpoint(port = motion::ports::AUTONOMOUS, max_bytes = 256, valid_for_ms = 100)]
-    fn autonomous(&self, _state: &()) -> Option<motion::MotionIntent> {
+    #[phoxal::runtime::outputs::setpoint(port = crate::api::__contracts::phoxal::motion::v1::motion::methods::AUTONOMOUS.__setpoint_port(), max_bytes = 256, valid_for_ms = 100)]
+    fn autonomous(
+        &self,
+        _state: &(),
+    ) -> Option<crate::api::__contracts::phoxal::motion::v1::MotionIntent> {
         None
     }
 }

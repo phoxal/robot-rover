@@ -1,4 +1,6 @@
 //! Sandbox rover composition and mission policy.
+phoxal::api!();
+
 mod config;
 mod inputs;
 mod outputs;

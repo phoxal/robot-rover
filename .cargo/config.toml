@@ -1,2 +1,6 @@
 [registries.phoxal]
 index = "sparse+https://phoxal.github.io/registry/"
+
+[patch.phoxal]
+phoxal = { path = "../framework/phoxal" }
+phoxal-supervisor = { path = "../framework/supervisor" }

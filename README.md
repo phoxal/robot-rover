@@ -25,15 +25,16 @@ These authored parameters are a sandbox model, not hardware calibration or proof
 
 ## Run the movement scenario
 
-Install `cargo-phoxal`, provision its managed simulator, then run:
+Install `cargo-phoxal`, prepare the exact participants, provision its managed simulator, then run:
 
 ```sh
 cargo phoxal simulation install
-cargo phoxal simulation scenario run ForwardTurnStop --locked --release
+cargo phoxal prepare
+cargo phoxal test forward_turn_stop --locked -- --nocapture
 ```
 
-The desktop opens automatically, drives forward, turns, and stops.
-Use `--headless` for automated acceptance.
+The test uses the headless native simulator and verifies Motion replies, status observations, movement, and a final stop.
+Pass `--simulator /absolute/path/phoxal-simulator` when qualifying a source build.
 
 ## License
 
