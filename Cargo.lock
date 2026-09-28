@@ -1896,6 +1896,8 @@ dependencies = [
  "phoxal-build",
  "phoxal-macros",
  "prost",
+ "prost-reflect",
+ "prost-types",
  "serde",
  "serde_bytes",
  "serde_json",

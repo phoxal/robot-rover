@@ -1,13 +1,11 @@
 //! Native movement check through the rover's selected Motion service.
 
 use phoxal::scenario::{CapturePolicy, Simulation};
-
 phoxal::api!();
 
-use api::__contracts::phoxal::motion::v1::{
-    ArmRequest, ControlMode, MotionIntent, apply_emergency_response::Decision,
-};
 use api::motion;
+use api::motion::{ApplyEmergencyResponse, ArmRequest, MotionIntent};
+use api::types::phoxal::motion::v1::ControlMode;
 use api::{kinematics, safety};
 
 #[phoxal::scenario]
@@ -25,7 +23,7 @@ fn forward_turn_stop(sim: &mut Simulation) -> phoxal::Result<()> {
     plan.send(manual(0.5, 0.0))?;
     plan.wait_steps(1)?;
     let arm = plan.send(motion::arm(ArmRequest {
-        mode: ControlMode::Manual as i32,
+        mode: ControlMode::Manual,
     }))?;
     plan.wait_steps(1)?;
     for _ in 0..50 {
@@ -39,31 +37,30 @@ fn forward_turn_stop(sim: &mut Simulation) -> phoxal::Result<()> {
     plan.send(manual(0.0, 0.0))?;
     plan.wait_steps(20)?;
     plan.send(motion::withdraw_manual())?;
-    let disarm = plan.send(motion::disarm(phoxal::contract::Empty {}))?;
+    let disarm = plan.send(motion::disarm(phoxal::contracts::Empty {}))?;
     plan.wait_steps(20)?;
 
     let observed = sim.run(plan)?;
-    let arm = observed.reply(arm)?;
     let statuses = observed.history(&status)?;
     let safety_history = observed.history(&safety_status)?;
     let odometry_history = observed.history(&odometry)?;
+    let arm = observed.reply(arm)?;
+    let disarm = observed.reply(disarm)?;
     assert!(
-        matches!(arm.decision.as_ref(), Some(Decision::Accepted(_))),
-        "Motion refused Arm: {arm:?}; Motion status: {:?}; Safety status: {:?}; odometry: {:?}",
-        statuses.last().map(|value| value.value()),
+        matches!(arm, ApplyEmergencyResponse::Accepted),
+        "Motion refused Arm: {arm:?}; Safety status: {:?}; odometry: {:?}",
         safety_history.last().map(|value| value.value()),
         odometry_history.last().map(|value| value.value()),
     );
-    let disarm = observed.reply(disarm)?;
     assert!(
-        matches!(disarm.decision.as_ref(), Some(Decision::Accepted(_))),
+        matches!(disarm, ApplyEmergencyResponse::Accepted),
         "Motion refused Disarm: {disarm:?}"
     );
     let final_status = statuses
         .last()
         .ok_or_else(|| phoxal::anyhow!("no Motion status"))?
         .value();
-    assert_eq!(final_status.mode, ControlMode::Disarmed as i32);
+    assert_eq!(final_status.mode, ControlMode::Disarmed);
     assert!(final_status.stopped, "Motion status did not report a stop");
     let body = observed.body_history(&body)?;
     let first = body
@@ -94,7 +91,7 @@ fn forward_turn_stop(sim: &mut Simulation) -> phoxal::Result<()> {
 fn manual(
     linear_x_mps: f64,
     angular_z_radps: f64,
-) -> impl phoxal::scenario::SendOperation<Response = phoxal::contract::Empty> {
+) -> impl phoxal::scenario::SendOperation<Response = phoxal::contracts::Empty> {
     motion::manual(MotionIntent {
         linear_x_mps,
         angular_z_radps,

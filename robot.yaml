@@ -5,8 +5,6 @@ robot:
   model: model.xml
   components:
     front_left_drive:
-      package: phoxal-component-ddsm115
-      version: 0.0.0-dev.3
       source: { path: ../framework/components/ddsm115 }
       mount_site: front_left_wheel_mount
       driver:
@@ -17,8 +15,6 @@ robot:
         config:
           id: 1
     front_right_drive:
-      package: phoxal-component-ddsm115
-      version: 0.0.0-dev.3
       source: { path: ../framework/components/ddsm115 }
       mount_site: front_right_wheel_mount
       driver:
@@ -29,8 +25,6 @@ robot:
         config:
           id: 2
     rear_left_drive:
-      package: phoxal-component-ddsm115
-      version: 0.0.0-dev.3
       source: { path: ../framework/components/ddsm115 }
       mount_site: rear_left_wheel_mount
       driver:
@@ -41,8 +35,6 @@ robot:
         config:
           id: 3
     rear_right_drive:
-      package: phoxal-component-ddsm115
-      version: 0.0.0-dev.3
       source: { path: ../framework/components/ddsm115 }
       mount_site: rear_right_wheel_mount
       driver:
@@ -53,8 +45,6 @@ robot:
         config:
           id: 4
     front_center_tof:
-      package: phoxal-component-vl53l1x
-      version: 0.0.0-dev.3
       source: { path: ../framework/components/vl53l1x }
       mount_site: front_center_tof_mount
       driver:
@@ -66,8 +56,6 @@ brain: {}
 
 services:
   kinematics:
-    package: phoxal-service-kinematics
-    version: 0.0.0-dev.3
     source: { path: ../framework/services/kinematics }
     config:
       wheel_radius_m: 0.11
@@ -91,20 +79,17 @@ services:
           longitudinal_offset_m: -0.18
           direction_sign: -1
   world:
-    package: phoxal-service-world
-    version: 0.0.0-dev.3
     source: { path: ../framework/services/world }
   safety:
-    package: phoxal-service-safety
-    version: 0.0.0-dev.3
     source: { path: ../framework/services/safety }
     config:
-      input_max_age_ms: 100
+      # The conversion adapter between world/motion and safety adds delivery
+      # hops; the extra headroom keeps the published constraint window valid
+      # by the time Motion consumes it.
+      input_max_age_ms: 200
       ranges:
         - sensor_id: front_center_tof
   motion:
-    package: phoxal-service-motion
-    version: 0.0.0-dev.3
     source: { path: ../framework/services/motion }
     config:
       wheel_radius_m: 0.11

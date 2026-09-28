@@ -1,5 +1,17 @@
-use crate::{config::Config, inputs::Inputs, outputs::Outputs};
+//! The rover brain: no mission selected at startup. Both mission intents
+//! are leased setpoint outputs bound to the selected Motion service's
+//! generated port identities, so the brain publishes exactly the leased
+//! calls Motion admits.
+
+use crate::config::Config;
 use phoxal::runtime::{InitContext, Runtime, StepContext};
+
+#[phoxal::runtime::inputs]
+pub(crate) struct Inputs {}
+
+#[phoxal::runtime::outputs]
+#[derive(Default)]
+pub(crate) struct Outputs {}
 
 #[derive(Clone, Copy, Debug, Default)]
 pub(crate) struct Brain;
@@ -26,22 +38,24 @@ impl Runtime for Brain {
 }
 
 #[phoxal::runtime::outputs]
-#[allow(dead_code, reason = "generated output projections")]
 impl Brain {
-    /// No operator or autonomous mission is selected at startup.
-    #[phoxal::runtime::outputs::setpoint(port = crate::api::__contracts::phoxal::motion::v1::motion::methods::MANUAL.__setpoint_port(), max_bytes = 256, valid_for_ms = 100)]
-    fn manual(
-        &self,
-        _state: &(),
-    ) -> Option<crate::api::__contracts::phoxal::motion::v1::MotionIntent> {
+    /// No operator mission is selected at startup.
+    #[phoxal::runtime::outputs::setpoint(
+        port = crate::api::motion::MANUAL.setpoint_port(),
+        max_bytes = 256,
+        valid_for_ms = 100
+    )]
+    fn manual(&self, _state: &()) -> Option<crate::api::motion::MotionIntent> {
         None
     }
 
-    #[phoxal::runtime::outputs::setpoint(port = crate::api::__contracts::phoxal::motion::v1::motion::methods::AUTONOMOUS.__setpoint_port(), max_bytes = 256, valid_for_ms = 100)]
-    fn autonomous(
-        &self,
-        _state: &(),
-    ) -> Option<crate::api::__contracts::phoxal::motion::v1::MotionIntent> {
+    /// No autonomous mission is selected at startup.
+    #[phoxal::runtime::outputs::setpoint(
+        port = crate::api::motion::AUTONOMOUS.setpoint_port(),
+        max_bytes = 256,
+        valid_for_ms = 100
+    )]
+    fn autonomous(&self, _state: &()) -> Option<crate::api::motion::MotionIntent> {
         None
     }
 }

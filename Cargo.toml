@@ -9,9 +9,12 @@ license = "MIT"
 [workspace]
 resolver = "3"
 
+# Local-path framework selection keeps this robot testable against the
+# in-development framework checkout beside it; the published registry
+# remains the dependency source for production robots.
 [workspace.dependencies]
-phoxal = { registry = "phoxal", version = "=0.0.0-dev.3" }
-phoxal-supervisor = { registry = "phoxal", version = "=0.0.0-dev.3" }
+phoxal = { path = "../framework/phoxal" }
+phoxal-supervisor = { path = "../framework/supervisor" }
 
 
 [dependencies]
@@ -22,7 +25,7 @@ phoxal-supervisor.workspace = true
 opt-level = 3
 
 [dev-dependencies]
-phoxal = { registry = "phoxal", version = "=0.0.0-dev.3", features = ["scenario"] }
+phoxal = { path = "../framework/phoxal", features = ["scenario"] }
 
 [build-dependencies]
-phoxal = { registry = "phoxal", version = "=0.0.0-dev.3", default-features = false, features = ["build"] }
+phoxal = { path = "../framework/phoxal", default-features = false, features = ["build"] }

@@ -2,8 +2,7 @@
 phoxal::api!();
 
 mod config;
-mod inputs;
-mod outputs;
+mod conversions;
 mod runtime;
 
 fn main() -> phoxal::Result<()> {
