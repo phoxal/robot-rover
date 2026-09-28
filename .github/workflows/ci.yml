@@ -36,9 +36,9 @@ jobs:
           cargo install cargo-phoxal --registry phoxal --version "$version" --locked --root "$RUNNER_TEMP/cli"
       - run: cargo fmt --all -- --check
       - name: Prepare the composition against the live registry
-        run: "$RUNNER_TEMP/cli/bin/cargo-phoxal" prepare
+        run: ${{ runner.temp }}/cli/bin/cargo-phoxal prepare
       - run: cargo clippy --all-targets --locked -- -D warnings
       - name: Check the compiled contracts
-        run: "$RUNNER_TEMP/cli/bin/cargo-phoxal" check
+        run: ${{ runner.temp }}/cli/bin/cargo-phoxal check
       - name: Compile the native scenario (recorded acceptance)
         run: cargo check --tests --locked
