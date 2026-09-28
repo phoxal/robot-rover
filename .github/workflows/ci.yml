@@ -1,0 +1,44 @@
+name: ci
+
+# Rover CI: formatting, strict clippy, and composition validation against
+# the published registry release with the published CLI.
+#
+# Compiling a Phoxal composition requires its prepared contracts, so one
+# job installs the published CLI, prepares the composition, and then
+# validates. The native forward/turn/stop scenario needs the MuJoCo
+# simulator installation; CI compiles it, and the recorded acceptance
+# command runs it on a prepared host:
+#
+#   DYLD_LIBRARY_PATH=<mujoco-framework> cargo-phoxal test \
+#     --simulator <simulator-binary> forward_turn_stop -- --nocapture
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: rustfmt, clippy
+      - name: Install the published CLI
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.cargo
+          printf '[registries.phoxal]\nindex = "sparse+https://phoxal.github.io/registry/"\n' \
+            >> ~/.cargo/config.toml
+          version="$(curl -fsSL https://phoxal.github.io/registry/ca/rg/cargo-phoxal \
+            | python3 -c "import sys,json; print(json.loads(sys.stdin.readlines()[-1])['vers'])")"
+          cargo install cargo-phoxal --registry phoxal --version "$version" --locked --root "$RUNNER_TEMP/cli"
+      - run: cargo fmt --all -- --check
+      - name: Prepare the composition against the live registry
+        run: ${{ runner.temp }}/cli/bin/cargo-phoxal prepare
+      - run: cargo clippy --all-targets --locked -- -D warnings
+      - name: Check the compiled contracts
+        run: ${{ runner.temp }}/cli/bin/cargo-phoxal check
+      - name: Compile the native scenario (recorded acceptance)
+        run: cargo check --tests --locked
