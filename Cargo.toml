@@ -22,7 +22,7 @@ phoxal-supervisor.workspace = true
 opt-level = 3
 
 [dev-dependencies]
-phoxal = { registry = "phoxal", version = "=0.0.0-dev.3", features = ["scenario"] }
+phoxal = { workspace = true, features = ["scenario"] }
 
 [build-dependencies]
 phoxal = { registry = "phoxal", version = "=0.0.0-dev.3", default-features = false, features = ["build"] }
