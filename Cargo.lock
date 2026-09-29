@@ -235,6 +235,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "block2"
+version = "0.6.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cdeb9d870516001442e364c5220d3574d2da8dc765554b4a617230d33fa58ef5"
+dependencies = [
+ "objc2",
+]
+
+[[package]]
 name = "bs58"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -509,6 +518,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "ctrlc"
+version = "3.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e0b1fab2ae45819af2d0731d60f2afe17227ebb1a1538a236da84c93e9a60162"
+dependencies = [
+ "dispatch2",
+ "nix 0.31.3",
+ "windows-sys 0.61.2",
+]
+
+[[package]]
 name = "darling"
 version = "0.24.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -644,6 +664,18 @@ dependencies = [
  "option-ext",
  "redox_users",
  "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "dispatch2"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1e0e367e4e7da84520dedcac1901e4da967309406d1e51017ae1abfb97adbd38"
+dependencies = [
+ "bitflags 2.13.2",
+ "block2",
+ "libc",
+ "objc2",
 ]
 
 [[package]]
@@ -1532,6 +1564,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "nix"
+version = "0.31.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf20d2fde8ff38632c426f1165ed7436270b44f199fc55284c38276f9db47c3d"
+dependencies = [
+ "bitflags 2.13.2",
+ "cfg-if",
+ "cfg_aliases",
+ "libc",
+]
+
+[[package]]
 name = "no-std-net"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1637,6 +1681,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "objc2"
+version = "0.6.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3a12a8ed07aefc768292f076dc3ac8c48f3781c8f2d5851dd3d98950e8c5a89f"
+dependencies = [
+ "objc2-encode",
+]
+
+[[package]]
+name = "objc2-encode"
+version = "4.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ef25abbcd74fb2609453eb695bd2f860d389e457f67dc17cafc8b8cbc89d0c33"
+
+[[package]]
 name = "oid-registry"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1674,6 +1733,29 @@ name = "parking"
 version = "2.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f38d5652c16fde515bb1ecef450ab0f6a219d619a7274976324d5e377f7dceba"
+
+[[package]]
+name = "parking_lot"
+version = "0.12.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "93857453250e3077bd71ff98b6a65ea6621a19bb0f559a85248955ac12c45a1a"
+dependencies = [
+ "lock_api",
+ "parking_lot_core",
+]
+
+[[package]]
+name = "parking_lot_core"
+version = "0.9.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2621685985a2ebf1c516881c026032ac7deafcda1a2c9b7850dc81e3dfcb64c1"
+dependencies = [
+ "cfg-if",
+ "libc",
+ "redox_syscall",
+ "smallvec",
+ "windows-link",
+]
 
 [[package]]
 name = "paste"
@@ -1805,9 +1887,9 @@ dependencies = [
 
 [[package]]
 name = "phoxal"
-version = "0.0.0-dev.3"
+version = "0.0.0-dev.6"
 source = "sparse+https://phoxal.github.io/registry/"
-checksum = "0f990645bdfa50c1eedd3b2480c4469784cefafa7b6812d9fa67f7de8775fd50"
+checksum = "2c9a487d4de8b79f5e3b7a2bb6136d7b3f891ba071e5451529f37fc71de0bd7b"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
@@ -1833,9 +1915,9 @@ dependencies = [
 
 [[package]]
 name = "phoxal-build"
-version = "0.0.0-dev.3"
+version = "0.0.0-dev.6"
 source = "sparse+https://phoxal.github.io/registry/"
-checksum = "370d4b09dccc3b204a7a08e169ae06fcd1693745dc1ec2e5731dbd8a0130b26a"
+checksum = "8a46477e5efdaf66ad4a140472e6e76153da722d9799cebb40c7555f980cd83c"
 dependencies = [
  "heck",
  "prettyplease",
@@ -1856,9 +1938,9 @@ dependencies = [
 
 [[package]]
 name = "phoxal-macros"
-version = "0.0.0-dev.3"
+version = "0.0.0-dev.6"
 source = "sparse+https://phoxal.github.io/registry/"
-checksum = "7a8ca3bfed1a3f83d10016ec5e91b2458b7a912cf1b37d0b8757925d409e1266"
+checksum = "fa84dfcb840ef3ce628920c1aada3f9fc0b912d7a1569162bce9f487ce2a3f57"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -1872,6 +1954,33 @@ name = "phoxal-robot-project"
 version = "0.0.0-dev.1"
 dependencies = [
  "phoxal",
+ "phoxal-supervisor",
+]
+
+[[package]]
+name = "phoxal-supervisor"
+version = "0.0.0-dev.6"
+source = "sparse+https://phoxal.github.io/registry/"
+checksum = "e5c6f8459f1e9b9f60cd66a5cc425e86984f0e6abf55fd1e416dc26af6c8ef62"
+dependencies = [
+ "anyhow",
+ "clap",
+ "ctrlc",
+ "getrandom 0.3.4",
+ "libc",
+ "phoxal",
+ "prost",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "sha2",
+ "tempfile",
+ "thiserror 2.0.21",
+ "tokio",
+ "tokio-util",
+ "tracing",
+ "tracing-subscriber",
+ "zenoh",
 ]
 
 [[package]]
@@ -2272,6 +2381,15 @@ dependencies = [
  "time",
  "x509-parser",
  "yasna",
+]
+
+[[package]]
+name = "redox_syscall"
+version = "0.5.18"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ed2bf2547551a7053d6fdfafda3f938979645c44812fbfcda098faae3f1a362d"
+dependencies = [
+ "bitflags 2.13.2",
 ]
 
 [[package]]
@@ -2698,6 +2816,15 @@ dependencies = [
  "serde",
  "serde_core",
  "zmij",
+]
+
+[[package]]
+name = "serde_spanned"
+version = "1.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6662b5879511e06e8999a8a235d848113e942c9124f211511b16466ee2995f26"
+dependencies = [
+ "serde_core",
 ]
 
 [[package]]
@@ -3156,6 +3283,7 @@ dependencies = [
  "bytes",
  "libc",
  "mio",
+ "parking_lot",
  "pin-project-lite",
  "signal-hook-registry",
  "socket2 0.6.5",
@@ -3211,6 +3339,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "toml"
+version = "0.9.12+spec-1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf92845e79fc2e2def6a5d828f0801e29a2f8acc037becc5ab08595c7d5e9863"
+dependencies = [
+ "indexmap 2.14.2",
+ "serde_core",
+ "serde_spanned",
+ "toml_datetime 0.7.5+spec-1.1.0",
+ "toml_parser",
+ "toml_writer",
+ "winnow 0.7.15",
+]
+
+[[package]]
+name = "toml_datetime"
+version = "0.7.5+spec-1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "92e1cfed4a3038bc5a127e35a2d360f145e1f4b971b551a2ba5fd7aedf7e1347"
+dependencies = [
+ "serde_core",
+]
+
+[[package]]
 name = "toml_datetime"
 version = "1.1.1+spec-1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3226,9 +3378,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1340ea94a5856333492c9064b02c778b191dd2c853778d9609debdcdfea3a614"
 dependencies = [
  "indexmap 2.14.2",
- "toml_datetime",
+ "toml_datetime 1.1.1+spec-1.1.0",
  "toml_parser",
- "winnow",
+ "winnow 1.0.4",
 ]
 
 [[package]]
@@ -3237,8 +3389,14 @@ version = "1.1.3+spec-1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1d38ac1cf9b95face32296c0a3ede1fdc270627c9d9c02a7274dd6d960dc4d56"
 dependencies = [
- "winnow",
+ "winnow 1.0.4",
 ]
+
+[[package]]
+name = "toml_writer"
+version = "1.1.2+spec-1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7d56353a2a665ad0f41a421187180aab746c8c325620617ad883a99a1cbe66d2"
 
 [[package]]
 name = "tracing"
@@ -3765,6 +3923,12 @@ checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
 
 [[package]]
 name = "winnow"
+version = "0.7.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "df79d97927682d2fd8adb29682d1140b343be4ac0f08fd68b7765d9c059d3945"
+
+[[package]]
+name = "winnow"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "23b97319f7b8343df12cc98938e5c3eb436064524c8d2b4e30a1d3a36eecdf81"
@@ -3930,6 +4094,7 @@ dependencies = [
  "serde_json",
  "serde_with",
  "serde_yaml",
+ "toml",
  "tracing",
  "uhlc",
  "validated_struct",
@@ -4151,7 +4316,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "09f2b7f60cdb5ad771d1a4f8e2eda15529e96dbe81c0ad2c1015b4c194347676"
 dependencies = [
  "async-trait",
- "nix",
+ "nix 0.29.0",
  "tokio",
  "tokio-util",
  "tracing",
