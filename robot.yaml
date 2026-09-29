@@ -5,7 +5,7 @@ robot:
   model: model.xml
   components:
     front_left_drive:
-      source: { package: { name: phoxal-component-ddsm115, version: 0.0.0-dev.3 } }
+      source: { package: { name: phoxal-component-ddsm115, version: 0.0.0-dev.6 } }
       mount_site: front_left_wheel_mount
       driver:
         connection:
@@ -15,7 +15,7 @@ robot:
         config:
           id: 1
     front_right_drive:
-      source: { package: { name: phoxal-component-ddsm115, version: 0.0.0-dev.3 } }
+      source: { package: { name: phoxal-component-ddsm115, version: 0.0.0-dev.6 } }
       mount_site: front_right_wheel_mount
       driver:
         connection:
@@ -25,7 +25,7 @@ robot:
         config:
           id: 2
     rear_left_drive:
-      source: { package: { name: phoxal-component-ddsm115, version: 0.0.0-dev.3 } }
+      source: { package: { name: phoxal-component-ddsm115, version: 0.0.0-dev.6 } }
       mount_site: rear_left_wheel_mount
       driver:
         connection:
@@ -35,7 +35,7 @@ robot:
         config:
           id: 3
     rear_right_drive:
-      source: { package: { name: phoxal-component-ddsm115, version: 0.0.0-dev.3 } }
+      source: { package: { name: phoxal-component-ddsm115, version: 0.0.0-dev.6 } }
       mount_site: rear_right_wheel_mount
       driver:
         connection:
@@ -45,7 +45,7 @@ robot:
         config:
           id: 4
     front_center_tof:
-      source: { package: { name: phoxal-component-vl53l1x, version: 0.0.0-dev.3 } }
+      source: { package: { name: phoxal-component-vl53l1x, version: 0.0.0-dev.6 } }
       mount_site: front_center_tof_mount
       driver:
         connection:
@@ -56,7 +56,7 @@ brain: {}
 
 services:
   kinematics:
-    source: { package: { name: phoxal-service-kinematics, version: 0.0.0-dev.3 } }
+    source: { package: { name: phoxal-service-kinematics, version: 0.0.0-dev.6 } }
     config:
       wheel_radius_m: 0.11
       wheel_base_m: 0.52
@@ -79,18 +79,23 @@ services:
           longitudinal_offset_m: -0.18
           direction_sign: -1
   world:
-    source: { package: { name: phoxal-service-world, version: 0.0.0-dev.3 } }
+    source: { package: { name: phoxal-service-world, version: 0.0.0-dev.6 } }
   safety:
-    source: { package: { name: phoxal-service-safety, version: 0.0.0-dev.3 } }
+    source: { package: { name: phoxal-service-safety, version: 0.0.0-dev.6 } }
     config:
-      # The conversion adapter between world/motion and safety adds delivery
-      # hops; the extra headroom keeps the published constraint window valid
-      # by the time Motion consumes it.
-      input_max_age_ms: 200
+      # Measured composition budget. The hosted conversion role forwards
+      # on arrival in hardware mode (no adapter tick); controlled
+      # simulation steps every runtime at strict input cuts, and its
+      # deterministic phase alignment across the two converted hops
+      # (world→safety, safety→motion) consumes exactly 100.0 ms — the
+      # original budget fails at exact equality (3/3 runs) and 101 ms
+      # passes. 120 ms keeps 20% margin over the measured requirement and
+      # refuses staler constraints than the previous 200 ms headroom.
+      input_max_age_ms: 120
       ranges:
         - sensor_id: front_center_tof
   motion:
-    source: { package: { name: phoxal-service-motion, version: 0.0.0-dev.3 } }
+    source: { package: { name: phoxal-service-motion, version: 0.0.0-dev.6 } }
     config:
       wheel_radius_m: 0.11
       wheel_base_m: 0.52
