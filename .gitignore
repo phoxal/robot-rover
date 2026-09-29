@@ -4,4 +4,3 @@
 .aider*
 /target/
 /.codex/worktrees/
-/src/bin/phoxal-adapter.rs
