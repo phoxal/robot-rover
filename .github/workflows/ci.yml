@@ -14,12 +14,17 @@ name: ci
 
 on:
   pull_request:
-  push:
-    branches: [main]
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      # Cargo install and project builds share the cache restored below.
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
     steps:
       - uses: actions/checkout@v4
       - uses: actions-rust-lang/setup-rust-toolchain@v1
@@ -31,9 +36,8 @@ jobs:
           mkdir -p ~/.cargo
           printf '[registries.phoxal]\nindex = "sparse+https://phoxal.github.io/registry/"\n' \
             >> ~/.cargo/config.toml
-          version="$(curl -fsSL https://phoxal.github.io/registry/ca/rg/cargo-phoxal \
-            | python3 -c "import sys,json; print(json.loads(sys.stdin.readlines()[-1])['vers'])")"
-          cargo install cargo-phoxal --registry phoxal --version "$version" --locked --root "$RUNNER_TEMP/cli"
+          cargo install cargo-phoxal --registry phoxal --version 0.0.0-dev.12 \
+            --locked --root "$RUNNER_TEMP/cli"
       - run: cargo fmt --all -- --check
       - name: Prepare the composition against the live registry
         run: ${{ runner.temp }}/cli/bin/cargo-phoxal prepare

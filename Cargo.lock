@@ -1887,9 +1887,9 @@ dependencies = [
 
 [[package]]
 name = "phoxal"
-version = "0.0.0-dev.6"
+version = "0.0.0-dev.7"
 source = "sparse+https://phoxal.github.io/registry/"
-checksum = "2c9a487d4de8b79f5e3b7a2bb6136d7b3f891ba071e5451529f37fc71de0bd7b"
+checksum = "9fe926766926a388c87cd492caccae96b31ae61af17e446111d0ddd8581e797f"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
@@ -1915,9 +1915,9 @@ dependencies = [
 
 [[package]]
 name = "phoxal-build"
-version = "0.0.0-dev.6"
+version = "0.0.0-dev.7"
 source = "sparse+https://phoxal.github.io/registry/"
-checksum = "8a46477e5efdaf66ad4a140472e6e76153da722d9799cebb40c7555f980cd83c"
+checksum = "708551fba78122b7709d3c2d043647e54942694a49e96300294f3607e71bf408"
 dependencies = [
  "heck",
  "prettyplease",
@@ -1938,9 +1938,9 @@ dependencies = [
 
 [[package]]
 name = "phoxal-macros"
-version = "0.0.0-dev.6"
+version = "0.0.0-dev.7"
 source = "sparse+https://phoxal.github.io/registry/"
-checksum = "fa84dfcb840ef3ce628920c1aada3f9fc0b912d7a1569162bce9f487ce2a3f57"
+checksum = "a33052a2b7fb5a26ce92da60244bcd5ecf8c6fe7c94cdf70310433668a00444d"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -1959,9 +1959,9 @@ dependencies = [
 
 [[package]]
 name = "phoxal-supervisor"
-version = "0.0.0-dev.6"
+version = "0.0.0-dev.7"
 source = "sparse+https://phoxal.github.io/registry/"
-checksum = "e5c6f8459f1e9b9f60cd66a5cc425e86984f0e6abf55fd1e416dc26af6c8ef62"
+checksum = "50a7bbdc94511ddafbbb2104c46c03794794d7262b59e339e79539df65c6a7ad"
 dependencies = [
  "anyhow",
  "clap",
