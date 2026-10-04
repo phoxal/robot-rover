@@ -1,18 +1,11 @@
 name: ci
 
-# Rover CI: formatting, strict clippy, and composition validation against
-# the published registry release with the published CLI.
-#
-# Compiling a Phoxal composition requires its prepared contracts, so one
-# job installs the published CLI, prepares the composition, and then
-# validates. The native forward/turn/stop scenario needs the MuJoCo
-# simulator installation; CI compiles it, and the recorded acceptance
-# command runs it on a prepared host:
-#
-#   DYLD_LIBRARY_PATH=<mujoco-framework> cargo-phoxal test \
-#     --simulator <simulator-binary> forward_turn_stop -- --nocapture
+# Deterministic composition checks use the published CLI and pinned participant sources.
+# Native movement and desktop controls are explicit host acceptance with user-managed MuJoCo.
 
 on:
+  push:
+    branches: [main]
   pull_request:
 
 concurrency:
@@ -33,13 +26,9 @@ jobs:
       - name: Install the published CLI
         run: |
           set -euo pipefail
-          mkdir -p ~/.cargo
-          printf '[registries.phoxal]\nindex = "sparse+https://phoxal.github.io/registry/"\n' \
-            >> ~/.cargo/config.toml
-          cargo install cargo-phoxal --registry phoxal --version 0.0.0-dev.12 \
-            --locked --root "$RUNNER_TEMP/cli"
+          cargo install cargo-phoxal --locked --root "$RUNNER_TEMP/cli"
       - run: cargo fmt --all -- --check
-      - name: Prepare the composition against the live registry
+      - name: Prepare the pinned composition
         run: ${{ runner.temp }}/cli/bin/cargo-phoxal prepare
       - run: cargo clippy --all-targets --locked -- -D warnings
       - name: Check the compiled contracts

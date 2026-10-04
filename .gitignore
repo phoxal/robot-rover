@@ -2,5 +2,5 @@
 .env
 .phoxal/
 .aider*
-/target/
+target/
 /.codex/worktrees/

@@ -2,12 +2,12 @@
 //! typed expectations of the selected services.
 
 use crate::api::motion;
+use crate::api::motion as motion_expectation;
+use crate::api::motion::ControlMode as PublishedControlMode;
 use crate::api::safety;
+use crate::api::safety as safety_published;
+use crate::api::safety::ControlMode as ExpectedControlMode;
 use crate::api::world;
-use crate::api::types::phoxal::motion::v1::ControlMode as PublishedControlMode;
-use crate::api::types::phoxal::private::phoxal_2dservice_2dmotion::phoxal_5fservice_5fmotion::contract as motion_expectation;
-use crate::api::types::phoxal::private::phoxal_2dservice_2dsafety::phoxal_5fservice_5fsafety::contract::ControlMode as ExpectedControlMode;
-use crate::api::types::phoxal::safety::v1 as safety_published;
 
 impl From<world::WorldBelief> for safety::WorldBelief {
     fn from(source: world::WorldBelief) -> safety::WorldBelief {
@@ -106,6 +106,16 @@ impl From<safety::MotionConstraints> for motion::MotionConstraints {
                 .collect(),
             valid_from_nanos: source.valid_from_nanos,
             expires_at_nanos: source.expires_at_nanos,
+            oldest_capture_time_nanos: source.oldest_capture_time_nanos,
+        }
+    }
+}
+
+impl From<world::WorldRevision> for crate::api::navigation::MapState {
+    fn from(source: world::WorldRevision) -> Self {
+        Self {
+            revision: source.revision,
+            available: source.available,
             oldest_capture_time_nanos: source.oldest_capture_time_nanos,
         }
     }
