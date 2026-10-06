@@ -1,76 +1,58 @@
 # Phoxal robot-rover
 
-Public sandbox robot project for trying Phoxal with a small rover. It also
-provides a non-application-specific check for framework changes.
+A minimal rover with a mandatory empty brain, four wheel components, and Motion.
 Linux and macOS are supported.
-Windows and other operating systems are unsupported and unqualified.
+The root application attaches `phoxal::api!()` once and runs `runtime::Brain` through the canonical runtime entry.
+The brain publishes nothing; Motion starts disarmed and supplies bounded commands to the wheels only after valid intent and arm requests.
 
-The project follows the authored robot project layout and tracks the evolving
-pre-1.0 framework.
-The native robot model is `model.xml`, selected from `robot.yaml`; the simulation
-environment is owned separately by `simulation/scene.xml`.
+`robot.yaml` owns component and service selections and their connections.
+`model.xml` owns the rover; `simulation/scene.xml` selects the physics environment.
+Motion selects `drive.differential` with named wheel actuators and uses an authored example wheel radius of 0.11 m and track width of 0.52 m.
+These explicit calibration values are not measurements derived from the composed model; automatic geometry is deferred.
+The scene uses a 10 ms native quantum.
+These are example parameters, not calibration for a physical robot.
 
-This repository is the authoritative source for the current public rover example.
-See <https://phoxal.com> for the project vision and public introduction.
+## Simulation
 
-## Service graph
-
-The authored graph connects all four wheel encoders to Kinematics, World, Safety, and Motion.
-Navigation also receives the converted World revision, proving the robot-owned map connection without changing the movement policy.
-Each drive service has explicit left and right wheel membership, a 110 mm wheel radius, a 520 mm contact-line separation, and per-wheel direction and gearing.
-The brain starts without manual or autonomous intent, and Motion starts disarmed.
-The framework service graph provides no implicit mission or automatic arm request.
-
-The scene uses a 10 ms native quantum and an explicitly synthetic WGS84 origin.
-The chassis starts with the four wheel surfaces on the ground; native contact determines the settled pose.
-These authored parameters are a sandbox model, not hardware calibration or proof of physical driver support.
-
-## Authored brain
-
-The brain runtime is authored through the framework's runtime authoring API.
-`src/runtime.rs` declares one `#[phoxal::endpoints]` contract whose two leased setpoint projections are typed by the selected Motion service's generated intent payload, and the inherent `#[phoxal::runtime]` implementation publishes `None` for both missions, so no manual or autonomous intent exists at startup.
-The crate attaches its generated API once through `phoxal::api!()` and launches `runtime::Brain` through `phoxal::runtime::run::<runtime::Brain>()`.
-Ordinary `From` implementations in `src/conversions.rs` map the selected services' independently typed input expectations.
-The API generator attaches their bounded inputs and stamped outputs to the brain's endpoint contract; conversions execute within the brain's normal accepted invocation, preserving the producer's original capture stamp.
-
-## Desktop simulation
-
-Install the public applications from crates.io:
-
-```sh
-cargo install cargo-phoxal
-cargo install phoxal-simulator
-```
-
-Native operations need an externally installed MuJoCo 3.12.0 shared library.
-The simulator installs, starts, and shows help without MuJoCo; it checks the user-managed library only when starting native simulation.
+Install the public tools with `cargo install cargo-phoxal` and `cargo install phoxal-simulator`.
+Native simulation requires a user-managed MuJoCo 3.12.0 library.
 See the [simulator prerequisite and discovery instructions](https://github.com/phoxal/simulator#readme).
-If the library is outside supported system locations, set `PHOXAL_MUJOCO_LIBRARY` to its actual file.
+Set `PHOXAL_MUJOCO_LIBRARY` when the library is outside supported discovery locations.
 
-From this repository, run one command:
-
-```sh
-cargo phoxal simulation project
-```
-
-The simulator invokes the public tool's source-preparation/bundle command and opens the desktop with simulation running.
-The window shows the actual scene, simulation time, and step counter.
-**Pause / Run** suspends and resumes the same execution; **Step** advances one boundary while paused.
-**Stop** ends the execution and shuts down its supervisor and participants.
-**Restart**, available after shutdown, starts a fresh execution from the prepared scene.
-Closing the window stops and joins the current execution.
-The default bound is 10,000 steps; use `--steps <count>` to change it or `--paused` to open paused.
-The brain starts disarmed, so visible simulation advancement alone does not command rover motion.
-
-## Movement qualification
+From this project, launch the desktop with an explicit scene:
 
 ```sh
-cargo phoxal test forward_turn_stop -- --nocapture
+cargo phoxal simulation simulation/scene.xml
 ```
 
-The headless scenario arms Motion, checks replies and status observations, verifies actual displacement, and confirms a final stop and Disarmed state.
-The four-wheel qualification and conversion tests retain capture provenance and failure/reset checks.
-Use `PHOXAL_SIMULATOR=/absolute/path/phoxal-simulator` to qualify an explicitly selected source binary.
+Use `--paused` for paused startup, `--release` for release compilation, or `--headless --duration 10s` for a finite headless run.
+Pause/Run controls one execution; Step advances one paused boundary; Reset returns that execution to its initial state.
+Stop shuts down the supervisor and participants; Restart starts a fresh execution from the prepared scene.
+Closing the window shuts down the active execution.
+An empty brain does not initiate movement merely because simulated time advances.
+
+## Behavior checks and ordinary tests
+
+```sh
+cargo phoxal scenario scenarios/forward_stop.rs
+cargo test
+```
+
+The scenario selects its scene explicitly, sends a typed Motion intent, advances simulated time, and checks native displacement and stop speed.
+The framework renews the bounded intent until its explicit withdrawal.
+Scenario targets are Cargo examples with `test = false`; ordinary Rust tests do not depend on a scenario host.
+Deeper full-stack and conversion qualification belongs to its service and framework owners.
+
+## Deployable build
+
+```sh
+cargo phoxal build
+```
+
+This assembles the release build under Cargo's target directory and writes `bundle/robot-rover.zip`.
+The archive contains the runnable composition and its resources with relative paths and executable permissions.
+Use `--output <ZIP_FILE>` to select another archive destination.
+Simulator ZIP ingestion is outside the current command surface.
 
 ## License
 

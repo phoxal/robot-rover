@@ -33,5 +33,7 @@ jobs:
       - run: cargo clippy --all-targets --locked -- -D warnings
       - name: Check the compiled contracts
         run: ${{ runner.temp }}/cli/bin/cargo-phoxal check
-      - name: Compile the native scenario (recorded acceptance)
-        run: cargo check --tests --locked
+      - name: Compile the explicitly executed scenario
+        run: cargo check --example forward-stop --locked
+      - name: Run ordinary Rust tests
+        run: cargo test --locked

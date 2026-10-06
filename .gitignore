@@ -3,4 +3,5 @@
 .phoxal/
 .aider*
 target/
+bundle/
 /.codex/worktrees/
