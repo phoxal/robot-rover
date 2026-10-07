@@ -65,8 +65,9 @@ robot.gamepad.yaml selects the standalone gamepad service from the delivered ser
 Motion and gamepad use the same qualified public owner revision, while components and supervisor retain their independent full Git pins.
 The common robot.yaml and forward_stop remain gamepad-free.
 This layer uses pure-freeze Pause semantics: admitted authority and logical leases are preserved, and changed OS input becomes visible through ordinary sampling/admission after resume.
-Native Linux aarch64 package build/tests are qualified against current local owners, and actual wrapped desktop controls and narrow layout have partial GUI acceptance.
-Physical Stadia USB Manual admission, forward/nonzero movement and later commanded-zero/stationarity have partial observed acceptance.
+Retained earlier-build evidence includes native Linux aarch64 package build/tests, partial wrapped desktop controls/narrow-layout acceptance, and observed Stadia USB Manual admission, forward/nonzero movement and later commanded-zero/stationarity.
+Those GUI and physical observations predate the SDK 0.72/tool 0.4/simulator 0.2.2 and current Git rebaseline; they are not fresh acceptance of this delivered composition.
+Current published-owner gamepad qualification covers config, compiled check, release build and generated API compilation.
 Directed backward/turn/deadman-release, unplug while moving, reconnect-held/fresh reengagement, actual Linux device input and held manipulation/cleanup gestures remain open.
 The observed zero/disarm transition is not yet attributed to a directed L1 release, and backward movement is human-reported only.
 See the public [service owner documentation](https://github.com/phoxal/services#readme) for package ownership.
