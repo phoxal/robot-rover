@@ -1,114 +1,100 @@
 # Phoxal robot-rover
 
-A minimal rover with a mandatory empty brain, four wheel components, and Motion.
+A minimal simulated rover with an empty brain, Motion and four native wheel motors.
 Linux and macOS are supported.
-The root application attaches `phoxal::api!()` once and runs `runtime::Brain` through the canonical runtime entry.
-The brain publishes nothing; Motion starts disarmed and supplies bounded commands to the wheels only after valid intent and arm requests.
+Physical DDSM115 hardware remains unavailable; do not use this workflow for real motor actuation.
 
-`robot.yaml` owns robot.brain, robot.services, robot.components and their consumer-owned bindings.
-Its named sources table shares concrete source selections; each reference is resolved after the selected files merge.
-`model.xml` owns the rover; `simulation/scene.xml` selects the physics environment.
-Motion selects `drive.differential` with named wheel actuators and uses an authored example wheel radius of 0.11 m and track width of 0.52 m.
-These explicit calibration values are not measurements derived from the composed model; automatic geometry is deferred.
-The physical free root is base_link, initially at world position [0, 0, 0.21] m, with chassis and wheel placement unchanged.
-Recorded robot body pose refers to that physical origin, rather than a floor-projected footprint.
-Recorded orientation is a body-to-world unit quaternion in [w, x, y, z] order; linear velocity is at the physical origin and both velocity vectors use world axes.
-Native body IDs are model-scoped and changed when the rigid footprint wrapper was removed.
-The scene uses a 10 ms native quantum.
-These are example parameters, not calibration for a physical robot.
+## Quick start
 
-Each wheel explicitly selects its driver and binds actuator to the corresponding named Motion output.
-DDSM115 has no runtime configuration because its hardware backend is unavailable; hardware startup refuses honestly.
-The simulator substitutes all four motors natively while retaining the same graph.
-Use cargo phoxal config to inspect the common resolved document without building participants.
-Official services and components are selected through local paths or full pinned Git revisions, not crates.io participant packages.
-Configuration inspection validates authored shape; compiled check additionally validates the exact selected owner contracts.
-For local development, retain selected layer files until preparing a different composition, because ordinary Cargo reads their exact prepared selection and checks input freshness.
-
-## Simulation
-
-The nested robot section and named source references are supported by published SDK 0.72.0 and cargo-phoxal 0.4.0.
-Install the released tools and inspect, check or build the common composition:
+Install the released tools, explicitly set up MuJoCo, then run from this repository:
 
 ```sh
 cargo install cargo-phoxal --version 0.4.0 --locked
-cargo install phoxal-simulator --version 0.2.2 --locked
-cargo phoxal config -f robot.yaml
-cargo phoxal check -f robot.yaml
-cargo phoxal build -f robot.yaml
-cargo phoxal prepare -f robot.yaml
-cargo check
-```
-
-Ignored .phoxal/local-owner.yaml, .phoxal/local-sdk.toml and .phoxal/cargo-local remain explicit private development inputs; ordinary Cargo does not discover their SDK patch automatically.
-Keep any selected local layer while its preparation is active, and prepare the common document again before ordinary public-owner work.
-Tool development may use an explicitly built source binary, but private owner/SDK overlays are not delivered-owner qualification.
-Native simulation requires a user-managed MuJoCo 3.12.0 library.
-See the [simulator prerequisite and discovery instructions](https://github.com/phoxal/simulator#readme).
-Set `PHOXAL_MUJOCO_LIBRARY` when the library is outside supported discovery locations.
-
-From this project, launch the desktop with an explicit scene:
-
-```sh
+cargo install phoxal-simulator --version 0.2.3 --locked
+phoxal-simulator setup
+cargo phoxal check
 cargo phoxal simulation simulation/scene.xml
 ```
 
-Use `--paused` for paused startup, `--release` for release compilation, or `--headless --duration 10s` for a finite headless run.
-Pause/Run controls one execution; Step advances one paused boundary; Reset returns that execution to its initial state.
-Stop shuts down the supervisor and participants; Restart starts a fresh execution from the prepared scene.
-Closing the window shuts down the active execution.
-An empty brain does not initiate movement merely because simulated time advances.
+The empty brain does not initiate movement.
+The simulator starts in Realtime; its controls operate on the same authoritative native execution.
 
-## Gamepad layer
+## Drive with a controller
 
-robot.gamepad.yaml selects the standalone gamepad service from the delivered services Git revision and binds Motion's manual input plus gamepad arm/disarm requirements.
-Motion and gamepad use the same qualified public owner revision, while components and supervisor retain their independent full Git pins.
-The common robot.yaml and forward_stop remain gamepad-free.
-This layer uses pure-freeze Pause semantics: admitted authority and logical leases are preserved, and changed OS input becomes visible through ordinary sampling/admission after resume.
-Retained earlier-build evidence includes native Linux aarch64 package build/tests, partial wrapped desktop controls/narrow-layout acceptance, and observed Stadia USB Manual admission, forward/nonzero movement and later commanded-zero/stationarity.
-Those GUI and physical observations predate the SDK 0.72/tool 0.4/simulator 0.2.2 and current Git rebaseline; they are not fresh acceptance of this delivered composition.
-Current published-owner gamepad qualification covers config, compiled check, release build and generated API compilation.
-Directed backward/turn/deadman-release, unplug while moving, reconnect-held/fresh reengagement, actual Linux device input and held manipulation/cleanup gestures remain open.
-The observed zero/disarm transition is not yet attributed to a directed L1 release, and backward movement is human-reported only.
-See the public [service owner documentation](https://github.com/phoxal/services#readme) for package ownership.
-The [gamepad package safety and configuration notes](https://github.com/phoxal/services/tree/main/gamepad) belong to the public service owner.
+Connect or pair through the operating system, with sticks centered and L1 released.
+Launch with the common file first and gamepad layer second:
 
 ```sh
-cargo phoxal config -f robot.yaml -f robot.gamepad.yaml
-cargo phoxal check -f robot.yaml -f robot.gamepad.yaml
-cargo phoxal build -f robot.yaml -f robot.gamepad.yaml
+cargo phoxal -f robot.yaml -f robot.gamepad.yaml config
+cargo phoxal -f robot.yaml -f robot.gamepad.yaml check
+cargo phoxal -f robot.yaml -f robot.gamepad.yaml simulation simulation/scene.xml
 ```
 
-Explicit files are ordered as robot.yaml then robot.gamepad.yaml; private owner overlays are optional development inputs and do not qualify delivered owners.
-Named selections in resolved config and prepared API inputs are concrete paths or pinned Git selections, without reference metadata.
-The published SDK 0.72.0 and cargo-phoxal 0.4.0 support this grouping without local patches.
-The physical-root scenarios are qualified with released SDK 0.72.0, cargo-phoxal 0.4.0 and simulator 0.2.2; historical footprint-origin samples are not directly comparable.
-After development checks, explicitly prepare/check the common files again so ordinary Cargo consumes the intended gamepad-free composition.
+With sticks centered, freshly press and hold L1, then move the sticks and observe rover movement.
+Left Y commands forward/back up to 0.5 m/s; inverted right X commands yaw up to 1.5 rad/s.
+L1 maps to gilrs LeftTrigger/left_bumper on the observed Stadia USB controller.
+Release withdraws intent; reconnect/reset requires observed release and a fresh neutral press.
+Motion owns limits and authority, and uncertain calls require stop/reset rather than automatic rearming.
+Linux needs access to the controller input devices and the gamepad owner's native prerequisites.
 
-## Behavior checks and ordinary tests
+Pause freezes logical time, state, authority and logical leases.
+Held connected control resumes normally; OS release/disconnect while paused is sampled at the next ordinary gamepad invocation and Motion admission.
+Step advances one normal boundary without forcing an extra input poll.
+The common composition remains gamepad-free so scenarios provide their own manual intent.
+
+## Desktop controls
+
+Run/Pause resumes/freezes.
+Pause first, then use Step for one boundary or Reset to restore the original scene/execution.
+Stop cleans up the supervisor and participants; Restart is available only after confirmed cleanup.
+Realtime paces boundaries; Fast runs uncapped without changing physics or leases.
+Sim/Wall/Speed show logical time, active wall time and recent achieved rate.
+
+Click selects a native body; right drag orbits, Shift-right/middle drag pans, scroll zooms and Shift-scroll pans.
+Focus selected frames the body; Default view resets the camera.
+Select base_link or explicitly Select movable ancestor before manipulating the rover root.
+Primary drag applies physical force while running; paused eligible free-body translation updates pose and resets that body's velocity without advancing time.
+Release/Escape/focus loss and liveness timeout clear simulator-owned drag force.
+
+## Check behavior
 
 ```sh
 cargo phoxal scenario scenarios/forward_stop.rs
 cargo phoxal scenario scenarios/turn_stop.rs
+cargo phoxal prepare
+cargo check
 cargo test
 ```
 
-The scenario selects its scene explicitly, sends a shared SDK MotionSetpoint, advances simulated time, and checks native displacement and stop speed.
-The framework renews the bounded intent until its explicit withdrawal.
-Scenario targets are Cargo examples with `test = false`; ordinary Rust tests do not depend on a scenario host.
-The common-composition turn_stop scenario additionally checks actual movement of all four wheels, accumulated native yaw, accepted arm/disarm, final Disarmed/stopped status and rotational stop.
-Service behavior is tested independently in its owning package with typed SDK admission; retired six-service fixture wiring and conversions are not selected by this rover.
+Forward_stop checks displacement and stopping.
+Turn_stop checks all four wheels, yaw, arm/disarm and rotational stop.
+These are native simulation evidence, not hardware or controller acceptance.
+Current public-owner common/gamepad config/check/build and both scenarios are qualified separately from earlier GUI/controller observations.
+Actual current-build GUI/held gestures, directed controller back/turn/release/unplug/reconnect and Linux device input remain deferred.
 
-## Deployable build
+## Model and composition
+
+robot.yaml owns nested participants, named pinned Git sources and consumer bindings; robot.gamepad.yaml adds the manual producer and arm/disarm calls.
+model.xml owns the physical base_link root and simulation/scene.xml owns its environment, with a 10 ms native quantum.
+Configured radius 0.11 m and track 0.52 m are example values, not derived geometry or physical calibration.
+Services/components are Git/local-only; SDK/tool/application releases retain their normal registry distribution.
+
+## Troubleshooting and development
+
+Run the simulator's displayed contextual setup command for missing/incompatible runtime; a strict PHOXAL_MUJOCO_LIBRARY override must be repaired or removed.
+Invalid scene/model errors need authored-resource repair, not another native download.
+Use a graphical session for desktop or `--headless --duration 10s` for finite execution.
+Unconfirmed cleanup disables restart; confirm authority/process cleanup and close/reopen.
+See the [simulator](https://github.com/phoxal/simulator#readme) and [gamepad](https://github.com/phoxal/services/tree/main/gamepad) owners for prerequisites and safety details.
+
+After layered development, restore common preparation before ordinary Cargo:
 
 ```sh
-cargo phoxal build
+cargo phoxal prepare -f robot.yaml
+cargo check
 ```
 
-This assembles the release build under Cargo's target directory and writes `bundle/robot-rover.zip`.
-The archive contains the runnable composition and its resources with relative paths and executable permissions.
-Use `--output <ZIP_FILE>` to select another archive destination.
-Simulator ZIP ingestion is outside the current command surface.
+Private development overlays are optional and do not qualify published owners.
 
 ## License
 
