@@ -44,7 +44,8 @@ The common composition remains gamepad-free so scenarios provide their own manua
 
 ## Desktop controls
 
-Run/Pause resumes/freezes; pause before Step advances one boundary or Reset restores the original scene/execution.
+Run/Pause resumes/freezes.
+Pause first, then use Step for one boundary or Reset to restore the original scene/execution.
 Stop cleans up the supervisor and participants; Restart is available only after confirmed cleanup.
 Realtime paces boundaries; Fast runs uncapped without changing physics or leases.
 Sim/Wall/Speed show logical time, active wall time and recent achieved rate.
