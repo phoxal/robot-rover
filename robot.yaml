@@ -1,85 +1,80 @@
 schema: phoxal/robot/v0
+sources:
+  wheel:
+    git:
+      name: phoxal-component-ddsm115
+      url: https://github.com/phoxal/components.git
+      rev: 336d07f7b1131880cb53cab1cf8e2ba29acc2a68
+      path: ddsm115
+  motion:
+    git:
+      name: phoxal-service-motion
+      url: https://github.com/phoxal/services.git
+      rev: 4adb2e994aff65feb40b5c1e2d49e0b9cd54436c
+      path: motion
+  supervisor:
+    git:
+      name: phoxal-supervisor
+      url: https://github.com/phoxal/supervisor.git
+      rev: e83ba96ca2e685a35234e4213f193f4b0593702c
 robot:
   id: robot-rover
   model: model.xml
   components:
     front_left_drive:
       source:
-        git:
-          name: phoxal-component-ddsm115
-          url: https://github.com/phoxal/components.git
-          rev: cba3d5773f034211367bf4032f672df444ec2d33
-          path: ddsm115
+        ref: wheel
       mount_site: front_left_wheel_mount
       driver:
         bindings:
           actuator: motion.front_left_actuator
     front_right_drive:
       source:
-        git:
-          name: phoxal-component-ddsm115
-          url: https://github.com/phoxal/components.git
-          rev: cba3d5773f034211367bf4032f672df444ec2d33
-          path: ddsm115
+        ref: wheel
       mount_site: front_right_wheel_mount
       driver:
         bindings:
           actuator: motion.front_right_actuator
     rear_left_drive:
       source:
-        git:
-          name: phoxal-component-ddsm115
-          url: https://github.com/phoxal/components.git
-          rev: cba3d5773f034211367bf4032f672df444ec2d33
-          path: ddsm115
+        ref: wheel
       mount_site: rear_left_wheel_mount
       driver:
         bindings:
           actuator: motion.rear_left_actuator
     rear_right_drive:
       source:
-        git:
-          name: phoxal-component-ddsm115
-          url: https://github.com/phoxal/components.git
-          rev: cba3d5773f034211367bf4032f672df444ec2d33
-          path: ddsm115
+        ref: wheel
       mount_site: rear_right_wheel_mount
       driver:
         bindings:
           actuator: motion.rear_right_actuator
+  brain: {}
+  services:
+    motion:
+      source:
+        ref: motion
+      config:
+        max_linear_mps: 0.6
+        max_angular_radps: 2.0
+        drive:
+          differential:
+            # Explicit example calibration, not model-derived measurements.
+            wheel_radius_m: 0.11
+            track_width_m: 0.52
+            wheels:
+              front_left:
+                side: left
+                direction_sign: 1
+              rear_left:
+                side: left
+                direction_sign: 1
+              front_right:
+                side: right
+                direction_sign: -1
+              rear_right:
+                side: right
+                direction_sign: -1
 supervisor:
   source:
-    git:
-      name: phoxal-supervisor
-      url: https://github.com/phoxal/supervisor.git
-      rev: 58a6dc05077b97f9a79da391cca0e20722e75c79
-brain: {}
-services:
-  motion:
-    source:
-      git:
-        name: phoxal-service-motion
-        url: https://github.com/phoxal/services.git
-        rev: f11d9f9b53d335d9be2a8f0baccd852ca98acbf9
-        path: motion
-    config:
-      max_linear_mps: 0.6
-      max_angular_radps: 2.0
-      drive:
-        differential:
-          # Authored example calibration, not model-derived measurements.
-          wheel_radius_m: 0.11
-          track_width_m: 0.52
-          wheels:
-            front_left:
-              side: left
-              direction_sign: 1
-            rear_left:
-              side: left
-              direction_sign: 1
-            front_right:
-              side: right
-              direction_sign: -1
-            rear_right:
-              side: right
-              direction_sign: -1
+    ref: supervisor

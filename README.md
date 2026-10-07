@@ -5,10 +5,15 @@ Linux and macOS are supported.
 The root application attaches `phoxal::api!()` once and runs `runtime::Brain` through the canonical runtime entry.
 The brain publishes nothing; Motion starts disarmed and supplies bounded commands to the wheels only after valid intent and arm requests.
 
-`robot.yaml` owns component and service selections and their consumer-owned bindings.
+`robot.yaml` owns robot.brain, robot.services, robot.components and their consumer-owned bindings.
+Its named sources table shares concrete source selections; each reference is resolved after the selected files merge.
 `model.xml` owns the rover; `simulation/scene.xml` selects the physics environment.
 Motion selects `drive.differential` with named wheel actuators and uses an authored example wheel radius of 0.11 m and track width of 0.52 m.
 These explicit calibration values are not measurements derived from the composed model; automatic geometry is deferred.
+The physical free root is base_link, initially at world position [0, 0, 0.21] m, with chassis and wheel placement unchanged.
+Recorded robot body pose refers to that physical origin, rather than a floor-projected footprint.
+Recorded orientation is a body-to-world unit quaternion in [w, x, y, z] order; linear velocity is at the physical origin and both velocity vectors use world axes.
+Native body IDs are model-scoped and changed when the rigid footprint wrapper was removed.
 The scene uses a 10 ms native quantum.
 These are example parameters, not calibration for a physical robot.
 
@@ -22,7 +27,22 @@ For local development, retain selected layer files until preparing a different c
 
 ## Simulation
 
-Install the public tools with `cargo install cargo-phoxal --locked` and `cargo install phoxal-simulator --locked`.
+The nested robot section and named source references are supported by published SDK 0.72.0 and cargo-phoxal 0.4.0.
+Install the released tools and inspect, check or build the common composition:
+
+```sh
+cargo install cargo-phoxal --version 0.4.0 --locked
+cargo install phoxal-simulator --version 0.2.2 --locked
+cargo phoxal config -f robot.yaml
+cargo phoxal check -f robot.yaml
+cargo phoxal build -f robot.yaml
+cargo phoxal prepare -f robot.yaml
+cargo check
+```
+
+Ignored .phoxal/local-owner.yaml, .phoxal/local-sdk.toml and .phoxal/cargo-local remain explicit private development inputs; ordinary Cargo does not discover their SDK patch automatically.
+Keep any selected local layer while its preparation is active, and prepare the common document again before ordinary public-owner work.
+Tool development may use an explicitly built source binary, but private owner/SDK overlays are not delivered-owner qualification.
 Native simulation requires a user-managed MuJoCo 3.12.0 library.
 See the [simulator prerequisite and discovery instructions](https://github.com/phoxal/simulator#readme).
 Set `PHOXAL_MUJOCO_LIBRARY` when the library is outside supported discovery locations.
@@ -45,8 +65,9 @@ robot.gamepad.yaml selects the standalone gamepad service from the delivered ser
 Motion and gamepad use the same qualified public owner revision, while components and supervisor retain their independent full Git pins.
 The common robot.yaml and forward_stop remain gamepad-free.
 This layer uses pure-freeze Pause semantics: admitted authority and logical leases are preserved, and changed OS input becomes visible through ordinary sampling/admission after resume.
-Native Linux aarch64 package build/tests are qualified against current local owners, and actual wrapped desktop controls and narrow layout have partial GUI acceptance.
-Physical Stadia USB Manual admission, forward/nonzero movement and later commanded-zero/stationarity have partial observed acceptance.
+Retained earlier-build evidence includes native Linux aarch64 package build/tests, partial wrapped desktop controls/narrow-layout acceptance, and observed Stadia USB Manual admission, forward/nonzero movement and later commanded-zero/stationarity.
+Those GUI and physical observations predate the SDK 0.72/tool 0.4/simulator 0.2.2 and current Git rebaseline; they are not fresh acceptance of this delivered composition.
+Current published-owner gamepad qualification covers config, compiled check, release build and generated API compilation.
 Directed backward/turn/deadman-release, unplug while moving, reconnect-held/fresh reengagement, actual Linux device input and held manipulation/cleanup gestures remain open.
 The observed zero/disarm transition is not yet attributed to a directed L1 release, and backward movement is human-reported only.
 See the public [service owner documentation](https://github.com/phoxal/services#readme) for package ownership.
@@ -58,23 +79,25 @@ cargo phoxal check -f robot.yaml -f robot.gamepad.yaml
 cargo phoxal build -f robot.yaml -f robot.gamepad.yaml
 ```
 
-For explicit private development, add .phoxal/local-owner.yaml and use the retained .phoxal/cargo-local wrapper only when selecting the separately retained local SDK patch.
-Ordinary commands use the published SDK and public Git pins, with no automatically discovered local SDK patch.
-Common and gamepad compositions are qualified through released cargo-phoxal 0.3.0, phoxal-simulator 0.2.1 and registry SDK 0.71.0.
-Common native forward_stop retains its exact qualified displacement and stop-speed results through delivered owner acquisition.
+Explicit files are ordered as robot.yaml then robot.gamepad.yaml; private owner overlays are optional development inputs and do not qualify delivered owners.
+Named selections in resolved config and prepared API inputs are concrete paths or pinned Git selections, without reference metadata.
+The published SDK 0.72.0 and cargo-phoxal 0.4.0 support this grouping without local patches.
+The physical-root scenarios are qualified with released SDK 0.72.0, cargo-phoxal 0.4.0 and simulator 0.2.2; historical footprint-origin samples are not directly comparable.
 After development checks, explicitly prepare/check the common files again so ordinary Cargo consumes the intended gamepad-free composition.
 
 ## Behavior checks and ordinary tests
 
 ```sh
 cargo phoxal scenario scenarios/forward_stop.rs
+cargo phoxal scenario scenarios/turn_stop.rs
 cargo test
 ```
 
 The scenario selects its scene explicitly, sends a shared SDK MotionSetpoint, advances simulated time, and checks native displacement and stop speed.
 The framework renews the bounded intent until its explicit withdrawal.
 Scenario targets are Cargo examples with `test = false`; ordinary Rust tests do not depend on a scenario host.
-Deeper full-stack and conversion qualification belongs to its service and framework owners.
+The common-composition turn_stop scenario additionally checks actual movement of all four wheels, accumulated native yaw, accepted arm/disarm, final Disarmed/stopped status and rotational stop.
+Service behavior is tested independently in its owning package with typed SDK admission; retired six-service fixture wiring and conversions are not selected by this rover.
 
 ## Deployable build
 
