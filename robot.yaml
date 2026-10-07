@@ -8,67 +8,51 @@ robot:
         git:
           name: phoxal-component-ddsm115
           url: https://github.com/phoxal/components.git
-          rev: 9aeb9c53c79ec2f0ed886330116b451e96c78d6c
+          rev: cba3d5773f034211367bf4032f672df444ec2d33
           path: ddsm115
       mount_site: front_left_wheel_mount
       driver:
-        connection:
-          type: serial
-          port: /dev/ttyUSB0
-          baud: 115200
-        config:
-          id: 1
+        bindings:
+          actuator: motion.front_left_actuator
     front_right_drive:
       source:
         git:
           name: phoxal-component-ddsm115
           url: https://github.com/phoxal/components.git
-          rev: 9aeb9c53c79ec2f0ed886330116b451e96c78d6c
+          rev: cba3d5773f034211367bf4032f672df444ec2d33
           path: ddsm115
       mount_site: front_right_wheel_mount
       driver:
-        connection:
-          type: serial
-          port: /dev/ttyUSB0
-          baud: 115200
-        config:
-          id: 2
+        bindings:
+          actuator: motion.front_right_actuator
     rear_left_drive:
       source:
         git:
           name: phoxal-component-ddsm115
           url: https://github.com/phoxal/components.git
-          rev: 9aeb9c53c79ec2f0ed886330116b451e96c78d6c
+          rev: cba3d5773f034211367bf4032f672df444ec2d33
           path: ddsm115
       mount_site: rear_left_wheel_mount
       driver:
-        connection:
-          type: serial
-          port: /dev/ttyUSB0
-          baud: 115200
-        config:
-          id: 3
+        bindings:
+          actuator: motion.rear_left_actuator
     rear_right_drive:
       source:
         git:
           name: phoxal-component-ddsm115
           url: https://github.com/phoxal/components.git
-          rev: 9aeb9c53c79ec2f0ed886330116b451e96c78d6c
+          rev: cba3d5773f034211367bf4032f672df444ec2d33
           path: ddsm115
       mount_site: rear_right_wheel_mount
       driver:
-        connection:
-          type: serial
-          port: /dev/ttyUSB0
-          baud: 115200
-        config:
-          id: 4
+        bindings:
+          actuator: motion.rear_right_actuator
 supervisor:
   source:
     git:
       name: phoxal-supervisor
       url: https://github.com/phoxal/supervisor.git
-      rev: 087da0b8a38f71c64601f2f9c1d5a39b306a6f3b
+      rev: 58a6dc05077b97f9a79da391cca0e20722e75c79
 brain: {}
 services:
   motion:
@@ -76,7 +60,7 @@ services:
       git:
         name: phoxal-service-motion
         url: https://github.com/phoxal/services.git
-        rev: 14aa9a7a5250c85622b5c8a640636d202e7f60bb
+        rev: f11d9f9b53d335d9be2a8f0baccd852ca98acbf9
         path: motion
     config:
       max_linear_mps: 0.6
@@ -99,12 +83,3 @@ services:
             rear_right:
               side: right
               direction_sign: -1
-connections:
-- from: motion.front_left_actuator
-  to: front_left_drive.actuator
-- from: motion.rear_left_actuator
-  to: rear_left_drive.actuator
-- from: motion.front_right_actuator
-  to: front_right_drive.actuator
-- from: motion.rear_right_actuator
-  to: rear_right_drive.actuator
