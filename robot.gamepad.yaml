@@ -1,0 +1,20 @@
+schema: phoxal/robot/v0
+services:
+  gamepad:
+    source:
+      git:
+        name: phoxal-service-gamepad
+        url: https://github.com/phoxal/services.git
+        rev: f11d9f9b53d335d9be2a8f0baccd852ca98acbf9
+        path: gamepad
+    config:
+      device: {mode: auto}
+      linear: {axis: left_y, deadzone: 0.12, invert: false, scale: 0.5}
+      angular: {axis: right_x, deadzone: 0.12, invert: true, scale: 1.5}
+      deadman: left_bumper
+    bindings:
+      arm_motion: motion.arm
+      disarm_motion: motion.disarm
+  motion:
+    bindings:
+      manual: gamepad.intent

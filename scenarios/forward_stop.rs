@@ -1,5 +1,6 @@
 //! Move the rover forward and verify a native stop.
 
+use phoxal::contracts::robotics::MotionSetpoint;
 use phoxal::scenario::Simulation;
 use std::time::Duration;
 phoxal::api!();
@@ -8,7 +9,7 @@ fn main() -> phoxal::Result<()> {
     let mut simulation = Simulation::new("simulation/scene.xml")?;
     let mut plan = simulation.plan();
     plan.advance(Duration::from_millis(500))?;
-    plan.send(api::motion::manual(api::motion::MotionIntent {
+    plan.send(api::motion::manual(MotionSetpoint {
         linear_x_mps: 0.5,
         angular_z_radps: 0.0,
     }))?;
