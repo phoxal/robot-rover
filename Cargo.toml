@@ -10,18 +10,23 @@ resolver = "3"
 
 
 [dependencies]
-phoxal = { version = "0.71.0" }
+phoxal = { version = "0.72.0" }
 
 [profile.dev.package.sha2]
 opt-level = 3
 
 [dev-dependencies]
-phoxal = { version = "0.71.0", features = ["scenario"] }
+phoxal = { version = "0.72.0", features = ["scenario"] }
 
 [build-dependencies]
-phoxal = { version = "0.71.0", default-features = false, features = ["build"] }
+phoxal = { version = "0.72.0", default-features = false, features = ["build"] }
 
 [[example]]
 name = "forward-stop"
 path = "scenarios/forward_stop.rs"
+test = false
+
+[[example]]
+name = "turn-stop"
+path = "scenarios/turn_stop.rs"
 test = false
