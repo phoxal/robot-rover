@@ -17,6 +17,12 @@ sources:
       name: phoxal-supervisor
       url: https://github.com/phoxal/supervisor.git
       rev: e83ba96ca2e685a35234e4213f193f4b0593702c
+  gamepad:
+    git:
+      name: phoxal-service-gamepad
+      url: https://github.com/phoxal/services.git
+      rev: 4adb2e994aff65feb40b5c1e2d49e0b9cd54436c
+      path: gamepad
 robot:
   id: robot-rover
   model: model.xml
@@ -51,6 +57,16 @@ robot:
           actuator: motion.rear_right_actuator
   brain: {}
   services:
+    gamepad:
+      source: {ref: gamepad}
+      config:
+        device: {mode: auto}
+        linear: {axis: left_y, deadzone: 0.12, invert: false, scale: 0.5}
+        angular: {axis: right_x, deadzone: 0.12, invert: true, scale: 1.5}
+        deadman: left_bumper
+      bindings:
+        arm_motion: motion.arm
+        disarm_motion: motion.disarm
     motion:
       source:
         ref: motion
@@ -75,6 +91,8 @@ robot:
               rear_right:
                 side: right
                 direction_sign: -1
+      bindings:
+        manual: gamepad.intent
 supervisor:
   source:
     ref: supervisor
