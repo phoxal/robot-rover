@@ -1,0 +1,8 @@
+# Scenarios own external Motion intent; do not admit a second onboard producer.
+schema: phoxal/robot/v0
+robot:
+  services:
+    gamepad: !delete
+    motion:
+      bindings:
+        manual: !delete

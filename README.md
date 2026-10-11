@@ -1,6 +1,6 @@
 # Phoxal robot-rover
 
-A minimal simulated rover with an empty brain, Motion and four native wheel motors.
+A minimal simulated rover with an empty brain, gamepad input, Motion and four native wheel motors.
 Linux and macOS are supported.
 Physical DDSM115 hardware remains unavailable; do not use this workflow for real motor actuation.
 
@@ -9,8 +9,8 @@ Physical DDSM115 hardware remains unavailable; do not use this workflow for real
 Install the released tools, explicitly set up MuJoCo, then run from this repository:
 
 ```sh
-cargo install cargo-phoxal --version 0.4.0 --locked
-cargo install phoxal-simulator --version 0.2.3 --locked
+cargo install cargo-phoxal --version 0.4.1 --locked
+cargo install phoxal-simulator --version 0.2.4 --locked
 phoxal-simulator setup
 cargo phoxal check
 cargo phoxal simulation simulation/scene.xml
@@ -22,12 +22,12 @@ The simulator starts in Realtime; its controls operate on the same authoritative
 ## Drive with a controller
 
 Connect or pair through the operating system, with sticks centered and L1 released.
-Launch with the common file first and gamepad layer second:
+Gamepad input is part of the common composition:
 
 ```sh
-cargo phoxal -f robot.yaml -f robot.gamepad.yaml config
-cargo phoxal -f robot.yaml -f robot.gamepad.yaml check
-cargo phoxal -f robot.yaml -f robot.gamepad.yaml simulation simulation/scene.xml
+cargo phoxal config
+cargo phoxal check
+cargo phoxal simulation simulation/scene.xml
 ```
 
 With sticks centered, freshly press and hold L1, then move the sticks and observe rover movement.
@@ -40,7 +40,7 @@ Linux needs access to the controller input devices and the gamepad owner's nativ
 Pause freezes logical time, state, authority and logical leases.
 Held connected control resumes normally; OS release/disconnect while paused is sampled at the next ordinary gamepad invocation and Motion admission.
 Step advances one normal boundary without forcing an extra input poll.
-The common composition remains gamepad-free so scenarios provide their own manual intent.
+The scenario composition removes onboard gamepad input so deterministic scenarios exclusively provide their own manual intent.
 
 ## Desktop controls
 
@@ -59,8 +59,8 @@ Release/Escape/focus loss and liveness timeout clear simulator-owned drag force.
 ## Check behavior
 
 ```sh
-cargo phoxal scenario scenarios/forward_stop.rs
-cargo phoxal scenario scenarios/turn_stop.rs
+cargo phoxal -f robot.yaml -f scenarios/robot.yaml scenario scenarios/forward_stop.rs
+cargo phoxal -f robot.yaml -f scenarios/robot.yaml scenario scenarios/turn_stop.rs
 cargo phoxal prepare
 cargo check
 cargo test
@@ -69,12 +69,12 @@ cargo test
 Forward_stop checks displacement and stopping.
 Turn_stop checks all four wheels, yaw, arm/disarm and rotational stop.
 These are native simulation evidence, not hardware or controller acceptance.
-Current public-owner common/gamepad config/check/build and both scenarios are qualified separately from earlier GUI/controller observations.
+Earlier retained-build GUI/controller observations are separate from published-owner native checks.
 Actual current-build GUI/held gestures, directed controller back/turn/release/unplug/reconnect and Linux device input remain deferred.
 
 ## Model and composition
 
-robot.yaml owns nested participants, named pinned Git sources and consumer bindings; robot.gamepad.yaml adds the manual producer and arm/disarm calls.
+robot.yaml owns nested participants, named pinned Git sources, gamepad intent and arm/disarm bindings.
 model.xml owns the physical base_link root and simulation/scene.xml owns its environment, with a 10 ms native quantum.
 Configured radius 0.11 m and track 0.52 m are example values, not derived geometry or physical calibration.
 Services/components are Git/local-only; SDK/tool/application releases retain their normal registry distribution.

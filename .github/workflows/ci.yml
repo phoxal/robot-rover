@@ -1,7 +1,7 @@
 name: ci
 
 # Deterministic composition checks use the published CLI and pinned participant sources.
-# Native movement and desktop controls are explicit host acceptance with user-managed MuJoCo.
+# Native movement and desktop controls are explicit host acceptance with simulator-owned setup or an admitted external MuJoCo.
 
 on:
   push:
@@ -23,6 +23,8 @@ jobs:
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           components: rustfmt, clippy
+      - name: Install native gamepad build prerequisites
+        run: sudo apt-get update && sudo apt-get install -y pkg-config libudev-dev
       - name: Install the published CLI
         run: |
           set -euo pipefail
@@ -30,10 +32,16 @@ jobs:
       - run: cargo fmt --all -- --check
       - name: Prepare the pinned composition
         run: ${{ runner.temp }}/cli/bin/cargo-phoxal prepare
-      - run: cargo clippy --all-targets --locked -- -D warnings
-      - name: Check the compiled contracts
+      - name: Check common gamepad contracts
         run: ${{ runner.temp }}/cli/bin/cargo-phoxal check
-      - name: Compile the explicitly executed scenario
-        run: cargo check --example forward-stop --locked
+      - name: Prepare and check the external-intent scenario composition
+        run: |
+          ${{ runner.temp }}/cli/bin/cargo-phoxal -f robot.yaml -f scenarios/robot.yaml prepare
+          ${{ runner.temp }}/cli/bin/cargo-phoxal -f robot.yaml -f scenarios/robot.yaml check
+      - name: Compile the explicitly executed scenarios
+        run: cargo check --examples --locked
+      - name: Restore common preparation
+        run: ${{ runner.temp }}/cli/bin/cargo-phoxal prepare
+      - run: cargo clippy --all-targets --locked -- -D warnings
       - name: Run ordinary Rust tests
         run: cargo test --locked
